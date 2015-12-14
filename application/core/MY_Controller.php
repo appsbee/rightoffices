@@ -8,6 +8,12 @@ class MY_Controller extends CI_Controller {
 	}
 
 	protected function is_logged_in() {
-		// return
+		return $this->session->userdata('admin') ? 1 : 0;
+	}
+
+	protected function redirect_guest() {
+		if (!$this->session->userdata('admin')) {
+			redirect('login', 'refresh');
+		}
 	}
 }

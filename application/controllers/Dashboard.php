@@ -5,6 +5,7 @@ class Dashboard extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
+		$this->redirect_guest();
 		$this->load->model('mdashboard');
 	}
 
