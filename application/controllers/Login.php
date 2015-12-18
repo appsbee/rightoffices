@@ -5,7 +5,7 @@ class Login extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('muser');
+		$this->load->model('madmin');
 	}
 
 	public function index() {
@@ -18,7 +18,7 @@ class Login extends MY_Controller {
 			} else {
 				$email = $this->input->post('email', true);
 				$password = $this->input->post('password', true);
-				$userdata = $this->muser->user_check($email, $password);
+				$userdata = $this->madmin->user_check($email, $password);
 
 				if (empty($userdata)) {
 					$this->session->set_flashdata('error_msg', 'Invalid Credential');

@@ -1,7 +1,7 @@
 </section>
         <!-- Placed js at the end of the document so the pages load faster -->
         <!--Core js-->
-        <script src="<?php echo base_url() ?>/public/js/lib/jquery.js"></script>
+       
         <script src="<?php echo base_url() ?>/public/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
         <script src="<?php echo base_url() ?>/public/bs3/js/bootstrap.min.js"></script>
         <script src="<?php echo base_url() ?>/public/js/accordion-menu/jquery.dcjqaccordion.2.7.js"></script>
