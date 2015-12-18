@@ -2,7 +2,11 @@
 require_once 'vendor/autoload.php';
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
-$dotenv->required(array('ENVIRONMENT', 'HOST_NAME', 'USER_NAME', 'PASSWORD', 'DATABASE'))->notEmpty();
+try {
+	$dotenv->required(array('ENVIRONMENT', 'HOST_NAME', 'USER_NAME', 'PASSWORD', 'DATABASE'))->notEmpty();
+} catch (Exception $e) {
+	die($e->getMessage());
+}
 /**
  * CodeIgniter
  *
