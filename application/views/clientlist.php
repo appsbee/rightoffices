@@ -16,7 +16,7 @@
                             </div>
 				<?php }?>
                         <header class="panel-heading no-border">
-                            Client List <!--<button class="btn btn-success" type="button" style="margin-right:50px; width:100px;">Add</button>-->
+                            Client List <a class="btn btn-success" href="#" style="margin-left:30px; width:100px;">Add Client</a>
                             <span class="tools pull-right">
 							    
                                 <a href="javascript:;" class="fa fa-chevron-down"></a>
@@ -29,7 +29,10 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Email</th>
+									<th>Name</th>
+									<th>Email</th>
+									<th>Company</th>
+									<th>Status</th>
 									<th>Action</th>
                                 </tr>
                                 </thead>
@@ -43,9 +46,21 @@
 								?>
 									<tr>
                                     <td><?php echo $i; ?></td>
+									<td><?php echo $client['first_name'].' '.$client['last_name']; ?></td>
                                     <td><?php echo $client['email']; ?></td>
-									<td><a href="<?php echo base_url("client/edit_client/".$client['user_id']); ?>" class="todo-edit"  name="<?php echo $client['user_id'];?>"><i class="ico-pencil"></i></a>
-                                         <a href="#" class="todo-remove"  name="<?php echo $client['user_id'];?>"><i class="ico-close"></i></a></td>
+									<td><?php echo $client['company']; ?></td>
+									 <td><?php  
+									 		if($client['status']){
+									 	?>
+										<span style="color:#006600;cursor:pointer;" class="status_active" id="<?php echo $client['id'];?>">Active</span>
+										<?php }else{?>
+										<span style="color:#FF0000;cursor:pointer;" class="status_inactive" id="<?php echo $client['id'];?>">Inactive</span>
+										<?php }?>
+									 </td>
+									<td><a href="<?php echo base_url('client/edit_client/'.$client['id']); ?>" class="todo-edit"  name="<?php echo $client['id'];?>"><i class="ico-pencil"></i></a>
+                                         <a href="#" class="todo-remove"  name="<?php echo $client['id'];?>"><i class="ico-close"></i></a>
+									    <!--<a href="#" class="todo-edit"  name="< ?php echo $client['id'];?>"><i class="ico-pencil"></i></a>-->
+										 </td>
                                 </tr>
 									
 								<?php  $i++; } 
@@ -81,6 +96,48 @@ $(document).ready(function(){
 			}
 		    });
 		}
+	});
+	$('.status_active').click(function(){
+		var user_id=$(this).attr('id');
+		var status=$(this).html();
+		var self=$(this);
+		$.ajax({
+			url : '<?php echo base_url('client/change_status');?>',
+			data : 'status='+status+'&user_id='+user_id,
+			dataType : 'text',
+			type:'POST',
+			cache:false,
+			success:function(msg){
+				if(msg==1){
+				  self.html('Active');
+				  self.css({'color':'#006600'});
+				}else {
+				  self.html('Inactive');
+				  self.css({'color':'#FF0000'});
+				}
+			}
+		});
+	});
+	$('.status_inactive').click(function(){
+		var user_id=$(this).attr('id');
+		var status=$(this).html();
+		var self=$(this);
+		$.ajax({
+			url : '<?php echo base_url('client/change_status');?>',
+			data : 'status='+status+'&user_id='+user_id,
+			dataType : 'text',
+			type:'POST',
+			cache:false,
+			success:function(msg){
+				if(msg==1){
+				  self.html('Active');
+				  self.css({'color':'#006600'});
+				}else {
+				  self.html('Inactive');
+				  self.css({'color':'#FF0000'});
+				}
+			}
+		});
 	});
 });
 </script>		

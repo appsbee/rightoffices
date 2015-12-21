@@ -7,11 +7,11 @@ class Mclient extends CI_Model {
 		parent::__construct();
 	}
 	public function record_count() {
-        return $this->db->count_all("users");
+        return $this->db->count_all("enquiry");
     }
 	public function client_list($limit, $start){
 		$this->db->limit($limit, $start);
-        $query = $this->db->get("users");
+        $query = $this->db->get("enquiry");
 		if ($query->num_rows() > 0) {
 		    $results=$query->result_array();
             foreach ($results as $row) {
@@ -22,14 +22,26 @@ class Mclient extends CI_Model {
         return false;
 	}
 	public function client_delete($user_id){
-		$this->db->delete('users',array('user_id'=>$user_id));
+		$this->db->delete('enquiry',array('id'=>$user_id));
 		return $this->db->affected_rows();
 	}
 	public function client_details($user_id){
 		$this->db->select('*');
-		$this->db->from('users');
-		$this->db->where(array('user_id'=>$user_id));
+		$this->db->from('enquiry');
+		$this->db->where(array('id'=>$user_id));
 		$query=$this->db->get();
-		$query->row_array();
+		return $query->row_array();
+	}
+	public function update_client($data,$condition){
+		$this->db->where($condition);
+		$this->db->update('enquiry',$data);
+	}
+	public function change_client_password($data,$condition){
+		$this->db->where($condition);
+		$this->db->update('enquiry',$data);
+	}
+	public function change_client_status($data,$condition){
+		$this->db->where($condition);
+		$this->db->update('enquiry',$data);
 	}
 }
