@@ -29,15 +29,6 @@ class Centre extends MY_Controller {
 		$centre_details=$this->mcentre->centre_details($CenterId);
 		echo json_encode($centre_details);
 	}
-	public function delete_centre(){
-		   $CentreID=$this->input->post('CentreID');	
-		   $status=$this->mcentre->centre_delete($CentreID);
-		   if($status){
-			echo 'Centre deleted successfully';
-		   }else{
-			echo 'Error in centre delete';
-		   }
-	}
 	public function _load_centrelist_view($centrelist,$links) {
 		  $data = array();
 		  $data['content'] = 'centrelist';

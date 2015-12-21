@@ -30,9 +30,9 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="<?php echo base_url('client/get_client_list'); ?>" <?php if($url=='client'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
-                                <span>Admin User Management</span>
+                                <span>Client Management</span>
                             </a>
                         </li>
                         <li class="sub-menu">
