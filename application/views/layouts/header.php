@@ -8,20 +8,24 @@
         <link rel="shortcut icon" href="images/favicon.png">
         <title>Dashboard</title>
         <!--Core CSS -->
-        <link href="<?php echo base_url() ?>/public/bs3/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/public/assets/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/public/css/bootstrap-reset.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/public/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/public/assets/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/public/css/clndr.css" rel="stylesheet">
-        <!--clock css-->
-        <link href="<?php echo base_url() ?>/public/assets/css3clock/css/style.css" rel="stylesheet">
-        <!--Morris Chart CSS -->
-        <link rel="stylesheet" href="<?php echo base_url() ?>/public/assets/morris-chart/morris.css">
-        <!-- Custom styles for this template -->
-        <link href="<?php echo base_url() ?>/public/css/style.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/public/css/style-responsive.css" rel="stylesheet"/>
-		 <script src="<?php echo base_url() ?>/public/js/lib/jquery.js"></script>
+    <link href="<?php echo base_url() ?>/public/bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>/public/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>/public/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <!--dynamic table-->
+    <link href="<?php echo base_url() ?>/public/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+    <link href="<?php echo base_url() ?>/public/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?php echo base_url() ?>/public/assets/data-tables/DT_bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="<?php echo base_url() ?>/public/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>/public/css/style-responsive.css" rel="stylesheet" />
+    
+    <!-- datepicker css 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">   -->    
+    
+	<script src="<?php echo base_url() ?>/public/js/lib/jquery.js"></script>
+  		
         <!-- Just for debugging purposes. Don't actually copy this line! -->
         <!--[if lt IE 9]><script src="js/ie8/ie8-responsive-file-warning.js"></script><![endif]-->
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

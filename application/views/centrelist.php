@@ -1,62 +1,54 @@
 <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
-<div class="row">
-	<div class="col-md-12">
+                 <div class="row">
+            <div class="col-sm-12">
                 <section class="panel">
-				<?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='success'){?>
-				<div class="alert alert-success alert-block fade in">
-                                <button type="button" class="close close-sm" data-dismiss="alert">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <h4>
-                                    <i class="icon-ok-sign"></i>
-                                    <?php echo $this->session->flashdata('msg'); ?>
-                                </h4>
-                            </div>
-				<?php }?>
-                        <header class="panel-heading no-border">
-                            Centre List
-                            <span class="tools pull-right">
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                <a href="javascript:;" class="fa fa-cog"></a>
-                                <a href="javascript:;" class="fa fa-times"></a>
-                             </span>
-                        </header>
-                        <div class="panel-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Description</th>
-									<th>Address</th>
-									<th>City</th>
-									<th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php if(empty($centres)) {
-									echo 'No record found';
-								?>
-								<?php }else{ 
-								    $i=1;
-									foreach($centres as $centre){
-								?>
-									<tr>
-                                    <td><?php echo $i; ?></td>
-                                    <td><?php echo $centre['CentreDescription']; ?></td>
-									<td><?php echo $centre['Address']; ?></td>
-									<td><?php echo $centre['City']; ?></td>
-									<td><a href="#abcd" data-toggle="modal" class="btn btn-success test" name="<?php echo $centre['CentreID']; ?>">View</a></td>
-                                </tr>
-									
-								<?php  $i++; } 
-								 
-								}?>
-                                </tbody>
-                            </table>
-                        </div>
-						 <!-- Modal -->
+                    <header class="panel-heading">
+                        Centre List
+                        <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                            <a href="javascript:;" class="fa fa-cog"></a>
+                            <a href="javascript:;" class="fa fa-times"></a>
+                         </span>
+                    </header>
+                    <div class="panel-body">
+                    <div class="adv-table">
+                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Description</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?php if(empty($centres)) {
+                                    echo 'No record found';
+                                ?>
+                                <?php }else{ 
+                                    $i=1;
+                                    foreach($centres as $centre){
+                                ?>
+                    <tr class="gradeA">
+                        <td><?php echo $i; ?></td>    
+                         <td><?php echo $centre['CentreDescription']; ?></td>
+                        <td><?php echo $centre['Address']; ?></td>
+                        <td><?php echo $centre['City']; ?></td>
+                        <td><a href="#abcd" data-toggle="modal" class="btn btn-success test" name="<?php echo $centre['CentreID']; ?>">View</a></td>
+                    </tr>
+                                                        
+                                <?php  $i++; } 
+                                 
+                                }?>
+                    </tbody>
+                    </table>
+                    </div>
+                    </div>
+                </section>
+                 <!-- Modal -->
                             <div class="modal fade" id="abcd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                                 <div class="modal-dialog" style="width:1000px;">
                                     <div class="modal-content" >
@@ -74,11 +66,8 @@
                                 </div>
                             </div>
                             <!-- modal -->
-                     <p><?php echo $links; ?></p>
-                    </section>
             </div>
-</div>
-                  
+        </div>
                 </section>
             </section>
             <!--main content end-->

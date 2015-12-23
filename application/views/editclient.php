@@ -14,6 +14,14 @@
                                 <strong><?php echo validation_errors(); ?></strong>
                             </div>
 							<?php }?>
+							<?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='error'){?>
+				<div class="alert alert-success alert-warning fade in">
+                                <button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button>
+								<storng><?php echo $this->session->flashdata('msg'); ?></storng>
+                            </div>
+				<?php }?> 
                         <header class="panel-heading">
                             Update Client
                         </header>
@@ -67,6 +75,31 @@
 	<div class="col-lg-12">
         <section class="panel">
 		                
+							
+                        <header class="panel-heading">
+                            Add Notes
+                        </header>
+                        <div class="panel-body">
+                            <div class="position-center">
+                                <form role="form" method="POST" action="<?php echo base_url('client/add_notes');?>">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Property</label>
+                                    <textarea rows="6" class="form-control" id="property" name="property"></textarea>
+                                </div>
+								<input type="hidden" name="user_id" id="user_id" value="<?php echo $client_details['id'];?>" />
+                                <button type="submit" class="btn btn-info">Add</button>
+                            </form>
+                            </div>
+
+                        </div>
+                    </section>       
+    </div>
+</div>
+<!-- mail-->
+<div class="row">
+	<div class="col-lg-12">
+        <section class="panel">
+		                
 							<?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='error'){?>
 				<div class="alert alert-success alert-warning fade in">
                                 <button type="button" class="close close-sm" data-dismiss="alert">
@@ -76,22 +109,21 @@
                             </div>
 				<?php }?> 
                         <header class="panel-heading">
-                            Change Password
+                            Send Email Notification
                         </header>
                         <div class="panel-body">
                             <div class="position-center">
-                                <form role="form" method="POST" action="<?php echo base_url('client/change_password');?>">
+                                <form role="form" method="POST" action="<?php echo base_url('client/send_notification');?>">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Password</label>
-                                    <input type="password" value="<?php echo set_value('password');?>" class="form-control" id="password" name="password" placeholder="Enter password">
+                                    <label for="exampleInputEmail1">Subject</label>
+                                    <input type="text"  class="form-control" id="subject" name="subject" placeholder="Subject">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Confirm Password</label>
-                                     <input type="password" value="<?php echo set_value('confirm_password');?>" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm password">
+                                    <label for="exampleInputEmail1">Message</label>
+                                   <textarea rows="6" class="form-control" id="message" name="message" placeholder="Message"></textarea>
                                 </div>
-								
 								<input type="hidden" name="user_id" id="user_id" value="<?php echo $client_details['id'];?>" />
-                                <button type="submit" class="btn btn-info">Update</button>
+                                <button type="submit" class="btn btn-info">Send</button>
                             </form>
                             </div>
 
@@ -99,6 +131,7 @@
                     </section>       
     </div>
 </div>
+<!-- mail-->
                   
                 </section>
             </section>

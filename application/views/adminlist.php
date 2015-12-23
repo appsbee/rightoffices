@@ -1,68 +1,55 @@
 <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
-<div class="row">
-	<div class="col-md-12">
+                <div class="row">
+            <div class="col-sm-12">
                 <section class="panel">
-				<?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='success'){?>
-				<div class="alert alert-success alert-block fade in">
-                                <button type="button" class="close close-sm" data-dismiss="alert">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <h4>
-                                    <i class="icon-ok-sign"></i>
-                                    <?php echo $this->session->flashdata('msg'); ?>
-                                </h4>
-                            </div>
-				<?php }?>
-                        <header class="panel-heading no-border">
-                            Admin List
-                            <span class="tools pull-right">
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                <a href="javascript:;" class="fa fa-cog"></a>
-                                <a href="javascript:;" class="fa fa-times"></a>
-                             </span>
-                        </header>
-                        <div class="panel-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Email</th>
-									<th>Name</th>
-									<th>Phone No</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php if(empty($users)) {
-									echo 'No record found';
-								?>
-								<?php }else{ 
-								    $i=1;
-									foreach($users as $user){
-								?>
-									<tr>
-                                    <td><?php echo $i; ?></td>
-                                    <td><?php echo $user['email']; ?></td>
-									 <td><?php echo $user['name']; ?></td>
-									  <td><?php echo $user['phone_no']; ?></td>
-                                    <td> <a href="<?php echo base_url("admin/edit_admin/".$user['id']); ?>" class="todo-edit"  name="<?php echo $user['id'];?>"><i class="ico-pencil"></i></a>
-                                         <a href="#" class="todo-remove"  name="<?php echo $user['id'];?>"><i class="ico-close"></i></a>
-									</td>
-                                </tr>
-									
-								<?php  $i++; } 
-								 
-								}?>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                    </section>
-              </div>
-</div>
-                  
+                    <header class="panel-heading">
+                        Admin List
+                        <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                            <a href="javascript:;" class="fa fa-cog"></a>
+                            <a href="javascript:;" class="fa fa-times"></a>
+                         </span>
+                    </header>
+                    <div class="panel-body">
+                    <div class="adv-table">
+                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                    <tr>
+                        <th>No</th>  
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Phone No</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                     <?php if(empty($users)) {
+                                    echo 'No record found';
+                                ?>
+                                <?php }else{ 
+                                    $i=1;
+                                    foreach($users as $user){
+                                ?>
+                    <tr class="gradeA">
+                        <td><?php echo $i; ?></td>    
+                         <td><?php echo $user['email']; ?></td>
+                        <td><?php echo $user['name']; ?></td>
+                        <td><?php echo $user['phone_no']; ?></td>
+                        <td><a href="<?php echo base_url("admin/edit_admin/".$user['id']); ?>" class="todo-edit"  name="<?php echo $user['id'];?>"><i class="ico-pencil"></i></a>
+                                         <a href="#" class="todo-remove"  name="<?php echo $user['id'];?>"><i class="ico-close"></i></a></td>
+                    </tr>
+                    <?php  $i++; } 
+                                 
+                                }?>
+                    </tbody>
+                    </table>
+                    </div>
+                    </div>
+                </section>
+            </div>
+        </div>                   
                 </section>
             </section>
             <!--main content end-->
@@ -87,7 +74,4 @@ $(document).ready(function(){
 		}
 	});
 });
-</script>			
-			
-			
-			
+</script>

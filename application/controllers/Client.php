@@ -7,6 +7,7 @@ class Client extends MY_Controller {
 		  parent::__construct();
 		  $this->redirect_guest();
 		  $this->load->model('mclient');
+		  $this->load->model('madminnote');
 	}	
 	public function get_client_list(){
 	      $this->load->library("pagination"); 
@@ -103,12 +104,72 @@ class Client extends MY_Controller {
 		$this->mclient->change_client_status($data,$condition);
 		echo $data['status'];
    }
+   public function client_search(){
+   		$this->load->library('form_validation');
+		$this->form_validation->set_rules('start_date','Start date','required');
+		$this->form_validation->set_rules('end_date','End date','required');
+		if ($this->form_validation->run() == FALSE){
+			redirect(base_url('client/get_client_list'),'refresh');
+		}else{
+			$start_date=$this->input->post('start_date');
+			$end_date=$this->input->post('end_date');
+			$client_details=$this->mclient->client_search_data($start_date,$end_date);
+		    $this->_load_clientsearchresult_view($client_details);
+		}
+   }
+   public function add_notes(){
+   		$this->load->library('form_validation');
+		$this->form_validation->set_rules('property','Property','required');
+		$user_id=$this->input->post('user_id');
+		if ($this->form_validation->run() == FALSE){
+			$client_details=$this->mclient->client_details($user_id);	
+		    $this->_load_clientedit_view($client_details);
+		}else{
+		    $property=$this->input->post('property');
+			$data=array('user_id'=>$user_id,'type'=>'note','property'=>$property);
+			$insert_id=$this->madminnote->add_note($data);
+			if($insert_id){
+				$this->session->set_flashdata('msgtype','success');
+			    $this->session->set_flashdata('msg','Note successfully added');
+     			redirect(base_url('client/get_client_list'),'refresh');
+			}else{
+				$this->session->set_flashdata('msgtype','error');
+			    $this->session->set_flashdata('msg','Error in adding note');
+				redirect(base_url('client/get_client_list'),'refresh');
+			}
+		}
+   }
+   public function send_notification(){
+		$user_id=$this->input->post('user_id');
+		$data['subject']=$this->input->post('subject');
+		$data['message']=$this->input->post('message');
+		$data['users']=$this->mclient->client_details($user_id);
+		$this->send_mail($data);
+		$this->session->set_flashdata('msgtype','success');
+		$this->session->set_flashdata('msg','Notification sent successfully');
+		redirect(base_url('client/get_client_list'),'refresh');
+   }
+   public function send_mail($data){
+   		$this->load->library('email');
+		$admin=$this->session->userdata('admin');
+		$this->email->from($admin['email'],$admin['name']);
+		$this->email->to($data['users']['email']);
+		$this->email->subject($data['subject']);
+		$this->email->message($data['message']);
+		$this->email->send();
+   }
    public function add_client(){
    		$this->_load_addclient_view();
    }
    public function _load_addclient_view() {
 		  $data = array();
 		  $data['content'] = 'addclient';
+		  $this->load->view('layouts/index', $data);
+   }
+   public function _load_clientsearchresult_view($client_details){
+   		  $data = array();
+		  $data['content'] = 'clientsearchresult';
+		  $data['clients'] = $client_details;
 		  $this->load->view('layouts/index', $data);
    }
    public function _load_clientlist_view($clientlist,$links) {
@@ -124,4 +185,5 @@ class Client extends MY_Controller {
 		  $data['client_details'] = $client_details;
 		  $this->load->view('layouts/index', $data);
    }
+   
 }

@@ -44,4 +44,15 @@ class Mclient extends CI_Model {
 		$this->db->where($condition);
 		$this->db->update('enquiry',$data);
 	}
+	public function client_search_data($start_data,$end_data){
+		$sql="select * from enquiry where DATE(created_at) between '".$start_data."' and '".$end_data."'";
+		$query=$this->db->query($sql);
+		return $query->result_array(); 
+	}
+	public function all_client_details(){
+		$this->db->select('*');
+		$this->db->from('enquiry');
+		$query=$this->db->get();
+		return $query->result_array();
+	}
 }
