@@ -13,37 +13,21 @@
                          </span>
                     </header>
                     <div class="panel-body">
-                    <div class="adv-table">
-                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <div class="adv-table">     <!--  id="dynamic-table"   class="display table table-bordered table-striped"-->
+                    <table  id="example" class="display table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>No</th>  
+                        <th>Id</th>   
                         <th>Email</th>
                         <th>Name</th>
                         <th>Phone No</th>
-                        <th>Action</th>
+                        <th>Action</th>   
+                       
                     </tr>
                     </thead>
-                    <tbody>
-                     <?php if(empty($users)) {
-                                    echo 'No record found';
-                                ?>
-                                <?php }else{ 
-                                    $i=1;
-                                    foreach($users as $user){
-                                ?>
-                    <tr class="gradeA">
-                        <td><?php echo $i; ?></td>    
-                         <td><?php echo $user['email']; ?></td>
-                        <td><?php echo $user['name']; ?></td>
-                        <td><?php echo $user['phone_no']; ?></td>
-                        <td><a href="<?php echo base_url("admin/edit_admin/".$user['id']); ?>" class="todo-edit"  name="<?php echo $user['id'];?>"><i class="ico-pencil"></i></a>
-                                         <a href="#" class="todo-remove"  name="<?php echo $user['id'];?>"><i class="ico-close"></i></a></td>
-                    </tr>
-                    <?php  $i++; } 
-                                 
-                                }?>
-                    </tbody>
+                    <tfoot>
+                        
+                    </tfoot>
                     </table>
                     </div>
                     </div>
@@ -53,25 +37,69 @@
                 </section>
             </section>
             <!--main content end-->
+            
 <script>
 $(document).ready(function(){
-	$('.todo-remove').click(function(){
-	    var result;
-		var user_id=$(this).attr('name');
-	    result=confirm("Would you like to proceed ?");
-		if(result){
-			$.ajax({
-					  url: "<?php echo base_url('admin/delete_admin'); ?>",
-					  cache: false,
-					  type: 'POST',
-					  dataType:'text',
-					  data : 'user_id='+user_id,
-					  success: function(msg){
-						alert(msg);
-						window.location="<?php echo base_url('admin/get_admin_list'); ?>";
-					  }
-				});	
-		}
-	});
+    
+    /*$('#example').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+                "url": "< ?php echo base_url('admin/get_all_admin_list'); ?>", //<--- place dataSrc here instead
+                "type": "POST"
+                }
+    } );   */
+    var table=$('#example').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": "<?php echo base_url('admin/get_all_admin_list'); ?>",
+                    "columnDefs": [ {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='todo-remove' href='#' style='margin-left:20px;'><i class='ico-close'></i></a>"
+                     } ]
+
+                });
+     $('#example tbody').on( 'click', '.todo-remove', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        result=confirm("Would you like to proceed ?");
+        if(result){
+            $.ajax({
+                      url: "<?php echo base_url('admin/delete_admin'); ?>",
+                      cache: false,
+                      type: 'POST',
+                      dataType:'text',
+                      data : 'user_id='+data[0],
+                      success: function(msg){
+                        alert(msg);
+                        window.location="<?php echo base_url('admin/get_admin_list'); ?>";
+                      }
+                });    
+        }
+    } );
+     $('#example tbody').on( 'click', '.todo-edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var url="<?php echo base_url('admin/edit_admin/'); ?>"+'/'+data[0];
+        window.location=url;   
+    } );
+    
+   /* $('.todo-remove').click(function(){
+        var result;
+       // var user_id=$(this).attr('name');
+        result=confirm("Would you like to proceed ?");
+        if(result){
+            $.ajax({
+                      url: "<?php echo base_url('admin/delete_admin'); ?>",
+                      cache: false,
+                      type: 'POST',
+                      dataType:'text',
+                      data : 'user_id='+user_id,
+                      success: function(msg){
+                        alert(msg);
+                        window.location="<?php echo base_url('admin/get_admin_list'); ?>";
+                      }
+                });    
+        }
+    }); */
 });
 </script>

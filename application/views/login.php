@@ -21,7 +21,7 @@
         </label>
         <!--<button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
         <a href="index.html" class="btn btn-lg btn-login btn-block">Sign in</a>-->
-		  <input type="submit" class="btn btn-lg btn-login btn-block" name="submit" id="submit">
+		  <input type="submit" class="btn btn-lg btn-login btn-block" name="submit" id="submit" value="Login">
 
         <div class="registration">
             Don't have an account yet?

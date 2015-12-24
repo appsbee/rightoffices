@@ -9,8 +9,13 @@ class Client extends MY_Controller {
 		  $this->load->model('mclient');
 		  $this->load->model('madminnote');
 	}	
+    public function get_all_client_list(){
+        $data=$this->mclient->all_client_list();
+        echo json_encode($data);
+    }
 	public function get_client_list(){
-	      $this->load->library("pagination"); 
+        $this->_load_clientlist_view();
+	     /* $this->load->library("pagination"); 
 		  $config = array();
           $config["base_url"] = base_url() . "client/get_client_list";
           $config["total_rows"] = $this->mclient->record_count();
@@ -21,7 +26,7 @@ class Client extends MY_Controller {
 		  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
           $links = $this->pagination->create_links();	
 		  $clientlist= $this->mclient->client_list($config["per_page"], $page);
-		  $this->_load_clientlist_view($clientlist, $links);
+		  $this->_load_clientlist_view($clientlist, $links);   */
    }
    public function delete_client(){
    		  $user_id=$this->input->post('user_id');
@@ -172,11 +177,11 @@ class Client extends MY_Controller {
 		  $data['clients'] = $client_details;
 		  $this->load->view('layouts/index', $data);
    }
-   public function _load_clientlist_view($clientlist,$links) {
+   public function _load_clientlist_view() {
 		  $data = array();
 		  $data['content'] = 'clientlist';
-		  $data['clients'] = $clientlist;
-		  $data['links'] = $links;
+		  //$data['clients'] = $clientlist;
+		  //$data['links'] = $links;
 		  $this->load->view('layouts/index', $data);
    }
    public function _load_clientedit_view($client_details){

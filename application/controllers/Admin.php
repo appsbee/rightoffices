@@ -8,10 +8,13 @@ class Admin extends MY_Controller {
 		  $this->redirect_guest();
 		  $this->load->model('madmin');
 	}
-
+    public function get_all_admin_list(){
+         $data=$this->madmin->all_admin_list();
+         echo json_encode($data);
+    }
 	public function get_admin_list(){
-		  $userlist= $this->madmin->user_list();
-		  $this->_load_userlist_view($userlist);
+		 // $userlist= $this->madmin->user_list();
+		  $this->_load_userlist_view();
 		
 	}
 	public function delete_admin(){
@@ -80,10 +83,10 @@ class Admin extends MY_Controller {
 		  $data['userdetails'] = $user_details;
   	      $this->load->view('layouts/index', $data);
 	}
-	public function _load_userlist_view($userlist) {
+	public function _load_userlist_view() {
 		  $data = array();
 		  $data['content'] = 'adminlist';
-		  $data['users'] = $userlist;
+		  //$data['users'] = $userlist;
 		  $this->load->view('layouts/index', $data);
 	}
 	

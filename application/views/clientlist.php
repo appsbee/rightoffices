@@ -23,50 +23,31 @@
                     </header>
                     <div class="panel-body">
                     <div class="adv-table">
-                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <div class="clearfix">
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="#">With selected mail</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="space15"></div>
+                    <table   id="example" class="display table table-bordered table-striped">
                     <thead>
                     <tr>
-                         
+                           
                            <th>No</th>       
-                           <th>Name</th>
+                           <th>Firstname</th>
+                           <th>Lastname</th>
                            <th>Email</th>
                            <th>Company</th>
-                           <th>Status</th>
                            <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>
-                         <?php if(empty($clients)) {
-                                    echo 'No record found';
-                                ?>
-                                <?php }else{ 
-                                    $i=1;
-                                    foreach($clients as $client){
-                                ?>
-                                    <tr>
-                                     
-                                    <td><?php echo $i; ?></td>
-                                    <td><?php echo $client['first_name'].' '.$client['last_name']; ?></td>
-                                    <td><?php echo $client['email']; ?></td>
-                                    <td><?php echo $client['company']; ?></td>
-                                     <td><?php  
-                                             if($client['status']){
-                                         ?>
-                                        <span style="color:#006600;cursor:pointer;" class="status_active" id="<?php echo $client['id'];?>">Active</span>
-                                        <?php }else{?>
-                                        <span style="color:#FF0000;cursor:pointer;" class="status_inactive" id="<?php echo $client['id'];?>">Inactive</span>
-                                        <?php }?>
-                                     </td>
-                                    <td><a href="<?php echo base_url('client/edit_client/'.$client['id']); ?>" class="todo-edit"  name="<?php echo $client['id'];?>"><i class="ico-pencil"></i></a>
-                                         <a href="#" class="todo-remove"  name="<?php echo $client['id'];?>"><i class="ico-close"></i></a>
-                                        <!--<a href="#" class="todo-edit"  name="< ?php echo $client['id'];?>"><i class="ico-pencil"></i></a>-->
-                                         </td>
-                                </tr>
-                                    
-                                <?php  $i++; } 
-                                 
-                                }?>
-                    </tbody>
+                    <tfoot>
+                        
+                    </tfoot>
                     </table>
                     </div>
                     </div>
@@ -78,9 +59,43 @@
             <!--main content end-->			
 <script>
 $(document).ready(function(){
+     var table=$('#example').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": "<?php echo base_url('client/get_all_client_list'); ?>",
+                    "columnDefs": [ {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='todo-remove' href='#' style='margin-left:20px;'><i class='ico-close'></i></a>"
+                     } ] 
+                     
+
+                });
+    $('#example tbody').on( 'click', '.todo-remove', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        result=confirm("Would you like to proceed ?");
+        if(result){
+            $.ajax({
+                      url: "<?php echo base_url('client/delete_client'); ?>",
+                      cache: false,
+                      type: 'POST',
+                      dataType:'text',
+                      data : 'user_id='+data[0],
+                      success: function(msg){
+                        alert(msg);
+                        window.location="<?php echo base_url('client/get_client_list'); ?>";
+                      }
+                });    
+        }
+    } );
+     $('#example tbody').on( 'click', '.todo-edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var url="<?php echo base_url('client/edit_client/'); ?>"+'/'+data[0];
+        window.location=url;   
+    } );
 	//$( "#start_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
 	//$( "#end_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-	$('.todo-remove').click(function(){
+	/*$('.todo-remove').click(function(){
 		var user_id=$(this).attr('name');
 		var result=confirm("Would you like to proceed ?");
 		if(result){
@@ -146,7 +161,7 @@ $(document).ready(function(){
    			  console.log(this.value);
 			});
 		}
-	});
+	}); */
 });
 </script>		
 			

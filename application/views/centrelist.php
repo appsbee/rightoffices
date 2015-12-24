@@ -14,7 +14,7 @@
                     </header>
                     <div class="panel-body">
                     <div class="adv-table">
-                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                    <table  id="example" class="display table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>No</th>
@@ -24,26 +24,8 @@
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>
-                        <?php if(empty($centres)) {
-                                    echo 'No record found';
-                                ?>
-                                <?php }else{ 
-                                    $i=1;
-                                    foreach($centres as $centre){
-                                ?>
-                    <tr class="gradeA">
-                        <td><?php echo $i; ?></td>    
-                         <td><?php echo $centre['CentreDescription']; ?></td>
-                        <td><?php echo $centre['Address']; ?></td>
-                        <td><?php echo $centre['City']; ?></td>
-                        <td><a href="#abcd" data-toggle="modal" class="btn btn-success test" name="<?php echo $centre['CentreID']; ?>">View</a></td>
-                    </tr>
-                                                        
-                                <?php  $i++; } 
-                                 
-                                }?>
-                    </tbody>
+                    <tfoot>
+                    </tfoot>
                     </table>
                     </div>
                     </div>
@@ -73,36 +55,76 @@
             <!--main content end-->
 <script>
 $(document).ready(function(){
-	$('.test').click(function(){
-		var CenterId= $(this).attr('name');
-		var Centrecontent="";
-		var json;
-		  $.ajax({
-					  url: "<?php echo base_url('centre/get_centre_details'); ?>",
-					  cache: false,
-					  type: 'POST',
-					  dataType:'text',
-					  data : 'CenterId='+CenterId,
-					  success: function(response){
-					  json = $.parseJSON(response);
-					  if(json){
-						  Centrecontent+='<table class="table table-bordered">';
-							  $.each( json, function( key, value ) {
-										if(key){
-										Centrecontent+='<tr >';
-										Centrecontent+='<td>'+key+'</td>';
-										Centrecontent+='<td>'+value+'</td>';
-										Centrecontent+='</tr>';
-										}
-								  });
-							 Centrecontent+='</table>';
-							 $('#centredata').html(Centrecontent);
-						    }	
-					 }
-				});	
-	});
+        var table=$('#example').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": "<?php echo base_url('centre/get_all_centre_list'); ?>",
+                    "columnDefs": [ {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<a class='btn btn-success test' data-toggle='modal' href='#abcd'>View</a>"
+                     } ]
+
+                });
+        $('#example tbody').on( 'click', '.test', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            var CenterId= data[0];
+            var Centrecontent="";
+            var json;
+            $.ajax({
+                      url: "<?php echo base_url('centre/get_centre_details'); ?>",
+                      cache: false,
+                      type: 'POST',
+                      dataType:'text',
+                      data : 'CenterId='+CenterId,
+                      success: function(response){
+                      json = $.parseJSON(response);
+                      if(json){
+                          Centrecontent+='<table class="table table-bordered">';
+                              $.each( json, function( key, value ) {
+                                        if(key){
+                                        Centrecontent+='<tr >';
+                                        Centrecontent+='<td>'+key+'</td>';
+                                        Centrecontent+='<td>'+value+'</td>';
+                                        Centrecontent+='</tr>';
+                                        }
+                                  });
+                             Centrecontent+='</table>';
+                             $('#centredata').html(Centrecontent);
+                            }    
+                     }
+                }); 
+    } );
+  /*  $('.test').click(function(){
+        var CenterId= $(this).attr('name');
+        var Centrecontent="";
+        var json;
+          $.ajax({
+                      url: "< ?php echo base_url('centre/get_centre_details'); ?>",
+                      cache: false,
+                      type: 'POST',
+                      dataType:'text',
+                      data : 'CenterId='+CenterId,
+                      success: function(response){
+                      json = $.parseJSON(response);
+                      if(json){
+                          Centrecontent+='<table class="table table-bordered">';
+                              $.each( json, function( key, value ) {
+                                        if(key){
+                                        Centrecontent+='<tr >';
+                                        Centrecontent+='<td>'+key+'</td>';
+                                        Centrecontent+='<td>'+value+'</td>';
+                                        Centrecontent+='</tr>';
+                                        }
+                                  });
+                             Centrecontent+='</table>';
+                             $('#centredata').html(Centrecontent);
+                            }    
+                     }
+                });    
+    }); */
 });
-</script>			
-			
-			
-			
+</script>            
+            
+            
+            

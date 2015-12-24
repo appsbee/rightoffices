@@ -21,10 +21,12 @@
     <link href="<?php echo base_url() ?>/public/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>/public/css/style-responsive.css" rel="stylesheet" />
     
-    <!-- datepicker css 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">   -->    
+    <link href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet"> 
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>   
     
-	<script src="<?php echo base_url() ?>/public/js/lib/jquery.js"></script>
+    <!-- datepicker css 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">--> 
+    <!--<script src="< ?php echo base_url() ?>/public/js/lib/jquery.js"></script>  -->
   		
         <!-- Just for debugging purposes. Don't actually copy this line! -->
         <!--[if lt IE 9]><script src="js/ie8/ie8-responsive-file-warning.js"></script><![endif]-->

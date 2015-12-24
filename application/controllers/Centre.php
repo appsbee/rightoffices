@@ -8,9 +8,13 @@ class Centre extends MY_Controller {
 		  $this->redirect_guest();
 		  $this->load->model('mcentre');
 	}
-
+    public function get_all_centre_list(){
+          $data=$this->mcentre->all_centre_list();
+          echo json_encode($data);
+    }
 	public function get_centre_list(){
-	      $this->load->library("pagination"); 
+          $this->_load_centrelist_view();
+	     /* $this->load->library("pagination"); 
 		  $config = array();
           $config["base_url"] = base_url() . "centre/get_centre_list";
           $config["total_rows"] = $this->mcentre->record_count();
@@ -20,20 +24,18 @@ class Centre extends MY_Controller {
 		  $this->pagination->initialize($config);
 		  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
           $links = $this->pagination->create_links();	
-		  $centrelist= $this->mcentre->centre_list($config["per_page"], $page);
-		  $this->_load_centrelist_view($centrelist, $links);
-		
+          $centrelist= $this->mcentre->centre_list($config["per_page"], $page);*/     
 	}
 	public function get_centre_details(){
 	    $CenterId=$this->input->post('CenterId');
 		$centre_details=$this->mcentre->centre_details($CenterId);
 		echo json_encode($centre_details);
 	}
-	public function _load_centrelist_view($centrelist,$links) {
+	public function _load_centrelist_view() {
 		  $data = array();
 		  $data['content'] = 'centrelist';
-		  $data['centres'] = $centrelist;
-		  $data['links'] = $links;
+		//  $data['centres'] = $centrelist;
+		//  $data['links'] = $links;
 		  $this->load->view('layouts/index', $data);
 	}
 	
