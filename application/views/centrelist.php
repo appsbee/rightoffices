@@ -80,7 +80,7 @@
     "columnDefs": [ {
     "targets": -1,
     "data": null,
-    "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='test' data-toggle='modal' href='#abcd' style='margin-left:18px;'><i class='icon-large icon-eye-open'></i></a>"
+    "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='test' data-toggle='modal' href='#abcd' style='margin-left:18px;'><i class='glyphicon glyphicon-eye-open'></i></a>"
     } ]
     });
     var dtable = $("#example").dataTable().api();
