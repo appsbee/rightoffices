@@ -25,12 +25,11 @@
               <div class="profile-desk">
                 <h1><?php  echo  $loginuser['name']; ?></h1>
                 <span class="text-muted"><?php echo  $loginuser['email']; ?></span>
-                <!-- <p>
+                <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Aenean porttitor vestibulum imperdiet. Ut auctor accumsan erat,
                   a vulputate metus tristique non. Aliquam aliquam vel orci quis sagittis.
-                </p> -->
-                <p>&nbsp;</p>
+                </p>
                 <a href="<?php echo base_url('settings/get_profile/'.$loginuser['id']); ?>" class="btn btn-primary">View Profile</a>
               </div>
             </div>
