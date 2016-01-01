@@ -4,13 +4,32 @@
                  <div class="row">
             <div class="col-sm-12">
                 <section class="panel">
-                    <header class="panel-heading">
-                        Centre List
+                        <?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='success'){?>
+                <div class="alert alert-success alert-block fade in">
+                                <button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                               <?php echo $this->session->flashdata('msg'); ?>
+                </div>
+                <?php }?> 
+                   <!-- <header class="panel-heading">
+                        <h4>Centre List</h4>
                         <span class="tools pull-right">
                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                             <a href="javascript:;" class="fa fa-cog"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
                          </span>
+                    </header> -->
+                    <header class="panel-heading">
+                        <div class="col-sm-12">
+                        <div class="col-sm-10 no-margin" style="padding-left:0;">
+                         <h4>Centre List</h4> </div>
+                        <div class="col-sm-2">
+                        <div class="pull-left"></div>
+
+                         </div>
+                         
+                         </div> <div class="clearfix"></div>           
                     </header>
                     <div class="panel-body">
                     <div class="adv-table">
@@ -62,10 +81,22 @@ $(document).ready(function(){
                     "columnDefs": [ {
                     "targets": -1,
                     "data": null,
-                    "defaultContent": "<a class='btn btn-success test' data-toggle='modal' href='#abcd'>View</a>"
+                    "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='test' data-toggle='modal' href='#abcd' style='margin-left:18px;'><i class='glyphicon glyphicon-list'></i></a>"
                      } ]
 
                 });
+        var dtable = $("#example").dataTable().api();
+$(".dataTables_filter input")
+    .unbind() 
+    .bind("input", function(e) { 
+        if(this.value.length >= 3 || e.keyCode == 13) {
+            dtable.search(this.value).draw();
+        }
+        if(this.value == "") {
+            dtable.search("").draw();
+        }
+        return;
+    });
         $('#example tbody').on( 'click', '.test', function () {
             var data = table.row( $(this).parents('tr') ).data();
             var CenterId= data[0];
@@ -95,34 +126,11 @@ $(document).ready(function(){
                      }
                 }); 
     } );
-  /*  $('.test').click(function(){
-        var CenterId= $(this).attr('name');
-        var Centrecontent="";
-        var json;
-          $.ajax({
-                      url: "< ?php echo base_url('centre/get_centre_details'); ?>",
-                      cache: false,
-                      type: 'POST',
-                      dataType:'text',
-                      data : 'CenterId='+CenterId,
-                      success: function(response){
-                      json = $.parseJSON(response);
-                      if(json){
-                          Centrecontent+='<table class="table table-bordered">';
-                              $.each( json, function( key, value ) {
-                                        if(key){
-                                        Centrecontent+='<tr >';
-                                        Centrecontent+='<td>'+key+'</td>';
-                                        Centrecontent+='<td>'+value+'</td>';
-                                        Centrecontent+='</tr>';
-                                        }
-                                  });
-                             Centrecontent+='</table>';
-                             $('#centredata').html(Centrecontent);
-                            }    
-                     }
-                });    
-    }); */
+     $('#example tbody').on( 'click', '.todo-edit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var url="<?php echo base_url('centre/edit_centre/'); ?>"+'/'+data[0];
+        window.location=url;   
+    } );
 });
 </script>            
             

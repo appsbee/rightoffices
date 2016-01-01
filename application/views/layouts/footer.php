@@ -22,7 +22,7 @@
 
 <!--dynamic table-->
 <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>/public/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="<?php echo base_url() ?>/public/assets/data-tables/DT_bootstrap.js"></script>  -->
+<script type="text/javascript" src="<?php echo base_url() ?>/public/assets/data-tables/DT_bootstrap.js"></script>  
 <!--common script init for all pages-->
 <script src="<?php echo base_url() ?>/public/js/scripts.js"></script>
 

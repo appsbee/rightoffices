@@ -11,7 +11,7 @@
                                 <button type="button" class="close close-sm" data-dismiss="alert">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <strong><?php echo validation_errors(); ?></strong>
+                                <?php echo validation_errors(); ?>
                             </div>
 							<?php }?>
 							<?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='error'){?>
@@ -19,12 +19,23 @@
                                 <button type="button" class="close close-sm" data-dismiss="alert">
                                     <i class="fa fa-times"></i>
                                 </button>
-								<storng><?php echo $this->session->flashdata('msg'); ?></storng>
+								<?php echo $this->session->flashdata('msg'); ?>
                             </div>
 				<?php }?> 
-                        <header class="panel-heading">
-                            Update Client
-                        </header>
+                     <!--   <header class="panel-heading">
+                            Update Client   <a  href='javascript:history.back()' class='btn btn-success' style="margin-left: 800px;">Back</a>
+                        </header>    -->
+                                                    <header class="panel-heading">
+                        <div class="col-sm-12">
+                        <div class="col-sm-10 no-margin" style="padding-left:0;">
+                        <h4>Update Client   </h4></div>
+                        <div class="col-sm-2">
+                        <div class="pull-right"> <a  href='javascript:history.back()' class='btn btn-success'>Back</a>     </div>
+                        
+                         </div>
+                         
+                         </div> <div class="clearfix"></div>           
+                    </header>
                         <div class="panel-body">
                             <div class="position-center">
                                 <form role="form" method="POST" action="<?php echo base_url('client/update_client_data');?>">
@@ -60,6 +71,18 @@
                                     <label for="exampleInputEmail1">Note</label>
                                     <input type="text" class="form-control" id="note" name="note" placeholder="Enter note" value="<?php echo $client_details['note'];?>">
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Status</label>
+                                    <select name='status' id='status' class="form-control">
+                                    <?php if($client_details['status']){?>
+                                    <option value="<?php echo $client_details['status']?>" selected="selected">Active</option>
+                                    <option value="0">Inactive</option>
+                                    <?php }else{?>
+                                    <option value="<?php echo $client_details['status']?>" selected="selected">Inactive</option>
+                                    <option value="1">Active</option>
+                                    <?php }?>
+                                    </select>
+                                </div>
                                 
 								<input type="hidden" name="user_id" id="user_id" value="<?php echo $client_details['id'];?>" />
                                 <button type="submit" class="btn btn-info">Update</button>
@@ -77,7 +100,7 @@
 		                
 							
                         <header class="panel-heading">
-                            Add Notes
+                           <h4>Add Notes</h4> 
                         </header>
                         <div class="panel-body">
                             <div class="position-center">
@@ -98,22 +121,13 @@
 <!-- mail-->
 <div class="row">
 	<div class="col-lg-12">
-        <section class="panel">
-		                
-							<?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='error'){?>
-				<div class="alert alert-success alert-warning fade in">
-                                <button type="button" class="close close-sm" data-dismiss="alert">
-                                    <i class="fa fa-times"></i>
-                                </button>
-								<storng><?php echo $this->session->flashdata('msg'); ?></storng>
-                            </div>
-				<?php }?> 
+        <section class="panel"> 
                         <header class="panel-heading">
-                            Send Email Notification
+                          <h4>  Send Email</h4>
                         </header>
                         <div class="panel-body">
                             <div class="position-center">
-                                <form role="form" method="POST" action="<?php echo base_url('client/send_notification');?>">
+                                <form role="form" method="POST" action="<?php echo base_url('client/send_mail_notification');?>">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Subject</label>
                                     <input type="text"  class="form-control" id="subject" name="subject" placeholder="Subject">
@@ -123,6 +137,7 @@
                                    <textarea rows="6" class="form-control" id="message" name="message" placeholder="Message"></textarea>
                                 </div>
 								<input type="hidden" name="user_id" id="user_id" value="<?php echo $client_details['id'];?>" />
+                                 <input type="hidden" name="formtype" id="formtype" value="normalform" />
                                 <button type="submit" class="btn btn-info">Send</button>
                             </form>
                             </div>

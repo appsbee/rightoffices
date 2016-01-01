@@ -24,15 +24,16 @@ class Login extends MY_Controller {
 					$this->session->set_flashdata('error_msg', 'Invalid Credential');
 					$this->_load_login_view();
 				} else {
-					// $this->session->set_userdata('login_check', 'true');
 					$this->session->set_userdata('admin', $userdata);
-					/*$data['content'] = 'dashboard';
-					$this->load->view('layouts/dashboard', $data);*/
 					redirect('dashboard','refresh');
 				}	
 			}
 		} else {
-			$this->_load_login_view();
+            if($this->is_logged_in()){
+              redirect('dashboard','refresh');  
+            }else{
+              $this->_load_login_view();   
+            }
 		}
 	}
 

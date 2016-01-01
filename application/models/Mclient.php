@@ -12,6 +12,7 @@ class Mclient extends CI_Model {
     public function all_client_list(){
         $aColumns = array(
             'id',
+            'id',
             'first_name',
             'last_name',
             'email',
@@ -129,8 +130,14 @@ class Mclient extends CI_Model {
  
         foreach ($rResult->result_array() as $aRow) {
             $row = array();
+            $i=1;
             foreach ($aColumns as $col) {
-                $row[] = $aRow[$col];
+                if($i==1){
+                $row[] = "<input type='checkbox' name='mail' value='".$aRow[$col]."'>";        
+                }else{
+                $row[] = $aRow[$col];    
+                }
+                $i++;
             }
             $output['data'][] = $row;
         }
@@ -158,7 +165,7 @@ class Mclient extends CI_Model {
 		$this->db->from('enquiry');
 		$this->db->where(array('id'=>$user_id));
 		$query=$this->db->get();
-		return $query->row_array();
+		return $query->row_array(); 
 	}
 	public function update_client($data,$condition){
 		$this->db->where($condition);
@@ -177,10 +184,9 @@ class Mclient extends CI_Model {
 		$query=$this->db->query($sql);
 		return $query->result_array(); 
 	}
-	public function all_client_details(){
-		$this->db->select('*');
-		$this->db->from('enquiry');
-		$query=$this->db->get();
-		return $query->result_array();
+	public function all_client_details($user_id){
+        $sql="select id,first_name,last_name,email from enquiry where id in (".$user_id.")";
+        $query=$this->db->query($sql);
+        return $query->result_array(); 
 	}
 }

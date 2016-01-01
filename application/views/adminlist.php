@@ -4,16 +4,28 @@
                 <div class="row">
             <div class="col-sm-12">
                 <section class="panel">
+                    <?php if ($this->session->flashdata('msgtype') && $this->session->flashdata('msgtype')=='success'){?>
+                <div class="alert alert-success alert-block fade in">
+                                <button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <?php echo $this->session->flashdata('msg'); ?>
+                                
+               </div>
+                <?php }?> 
                     <header class="panel-heading">
-                        Admin List
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            <a href="javascript:;" class="fa fa-cog"></a>
-                            <a href="javascript:;" class="fa fa-times"></a>
-                         </span>
+                        <div class="col-sm-12">
+                        <div class="col-sm-10 no-margin" style="padding-left:0;">
+                        <h4>Admin List</h4></div>
+                        <div class="col-sm-2">
+                        <div class="pull-left"><a  href='<?php echo base_url('admin/add_admin');?>' class='btn btn-success'>Add</a>  </div>
+
+                         </div>
+                         
+                         </div> <div class="clearfix"></div>           
                     </header>
                     <div class="panel-body">
-                    <div class="adv-table">     <!--  id="dynamic-table"   class="display table table-bordered table-striped"-->
+                    <div class="adv-table">    
                     <table  id="example" class="display table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -40,15 +52,6 @@
             
 <script>
 $(document).ready(function(){
-    
-    /*$('#example').DataTable( {
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-                "url": "< ?php echo base_url('admin/get_all_admin_list'); ?>", //<--- place dataSrc here instead
-                "type": "POST"
-                }
-    } );   */
     var table=$('#example').DataTable({
                     "processing": true,
                     "serverSide": true,
@@ -60,6 +63,18 @@ $(document).ready(function(){
                      } ]
 
                 });
+    var dtable = $("#example").dataTable().api();
+$(".dataTables_filter input")
+    .unbind() 
+    .bind("input", function(e) { 
+        if(this.value.length >= 3 || e.keyCode == 13) {
+            dtable.search(this.value).draw();
+        }
+        if(this.value == "") {
+            dtable.search("").draw();
+        }
+        return;
+    });
      $('#example tbody').on( 'click', '.todo-remove', function () {
         var data = table.row( $(this).parents('tr') ).data();
         result=confirm("Would you like to proceed ?");
@@ -82,24 +97,5 @@ $(document).ready(function(){
         var url="<?php echo base_url('admin/edit_admin/'); ?>"+'/'+data[0];
         window.location=url;   
     } );
-    
-   /* $('.todo-remove').click(function(){
-        var result;
-       // var user_id=$(this).attr('name');
-        result=confirm("Would you like to proceed ?");
-        if(result){
-            $.ajax({
-                      url: "<?php echo base_url('admin/delete_admin'); ?>",
-                      cache: false,
-                      type: 'POST',
-                      dataType:'text',
-                      data : 'user_id='+user_id,
-                      success: function(msg){
-                        alert(msg);
-                        window.location="<?php echo base_url('admin/get_admin_list'); ?>";
-                      }
-                });    
-        }
-    }); */
 });
 </script>

@@ -157,6 +157,10 @@ class Mcentre extends CI_Model {
 		$query=$this->db->get();
 		return $query->row_array();
 	}
+    public function update_centre($data,$condition){
+       $this->db->where($condition); 
+       $this->db->update('Centre',$data);
+    }
 	public function centre_images($CentreId){
 	    $this->db->select('CentreID,displayorder,url');
 		$this->db->from('Photos');

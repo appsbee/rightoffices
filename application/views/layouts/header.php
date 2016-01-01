@@ -23,7 +23,9 @@
     
     <link href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet"> 
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>   
-    
+    <!-- ckeditor -->
+    <script src="<?php echo base_url() ?>public/ckeditor/ckeditor.js"></script>    
+
     <!-- datepicker css 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">--> 
     <!--<script src="< ?php echo base_url() ?>/public/js/lib/jquery.js"></script>  -->
@@ -225,6 +227,16 @@
                     </ul>
                     <!--  notification end -->
                 </div>
+                <?php 
+                        $logindata=$this->session->userdata('admin');
+                        if(!empty($logindata['profileimage'])){
+                            $image= explode('.',$logindata['profileimage']);
+                            $user_image=$image[0].'_small.'.$image[1];
+                            $imagepath=base_url().'upload/images/admin/'.$user_image;
+                        }else{
+                            $imagepath=base_url().'public/images/lock_thumb.jpg';
+                        }  
+                ?>
                 <div class="top-nav clearfix">
                     <!--search & user info start-->
                     <ul class="nav pull-right top-menu">
@@ -234,9 +246,8 @@
                         <!-- user login dropdown start-->
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <img alt="" src="<?php echo base_url() ?>/public/images/avatar1_small.jpg">
-                                <span class="username"><?php $logindata=$this->session->userdata('login_user_data');
-								echo  $logindata['name']; ?></span>
+                                <img alt="" src="<?php echo $imagepath; ?>">
+                                <span class="username"></span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu extended logout">

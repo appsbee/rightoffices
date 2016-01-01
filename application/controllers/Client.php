@@ -37,6 +37,11 @@ class Client extends MY_Controller {
 		  	echo 'Error in deleting client';
 		  }
    }
+   public function get_client_all_details(){
+       $id=$this->input->post('id');
+       $client_details=$this->mclient->client_details($id);  
+       echo json_encode($client_details);  
+   }
    public function edit_client($user_id){ 
    		  $client_details=$this->mclient->client_details($user_id);	
 		  $this->_load_clientedit_view($client_details);
@@ -65,6 +70,7 @@ class Client extends MY_Controller {
 			 $data['phone_no']=$this->input->post('phone_no');
 			 $data['office_size']=$this->input->post('office_size');
 			 $data['note']=$this->input->post('note');
+             $data['status']=$this->input->post('status');
 			 $condition['id']=$user_id;
 			 $this->mclient->update_client($data,$condition);
 			 $this->session->set_flashdata('msgtype','success');
@@ -144,24 +150,47 @@ class Client extends MY_Controller {
 			}
 		}
    }
-   public function send_notification(){
-		$user_id=$this->input->post('user_id');
-		$data['subject']=$this->input->post('subject');
-		$data['message']=$this->input->post('message');
-		$data['users']=$this->mclient->client_details($user_id);
-		$this->send_mail($data);
-		$this->session->set_flashdata('msgtype','success');
-		$this->session->set_flashdata('msg','Notification sent successfully');
-		redirect(base_url('client/get_client_list'),'refresh');
+   public function send_mail_notification(){
+            $user_id=$this->input->post('user_id');   
+            if($user_id!=''){
+                $data['formtype']=$this->input->post('formtype');  
+                $data['subject']=$this->input->post('subject');
+                $data['message']=$this->input->post('message');
+                if($data['formtype']=='popup'){
+                    $data['users']=$this->mclient->all_client_details($user_id);
+                    $this->send_mail($data); 
+                    echo 'Mail sent successfully';
+                }else{
+                    $data['users']=$this->mclient->client_details($user_id);
+                    $this->send_mail($data);
+                    $this->session->set_flashdata('msgtype','success');
+                    $this->session->set_flashdata('msg','Mail sent successfully');
+                    redirect(base_url('client/get_client_list'),'refresh');
+                    
+                } 
+            }else{
+                echo 'Please select client to send mail';
+            }
    }
    public function send_mail($data){
-   		$this->load->library('email');
-		$admin=$this->session->userdata('admin');
-		$this->email->from($admin['email'],$admin['name']);
-		$this->email->to($data['users']['email']);
-		$this->email->subject($data['subject']);
-		$this->email->message($data['message']);
-		$this->email->send();
+            $this->load->library('email');
+            $admin=$this->session->userdata('admin');
+            if($data['formtype']=='popup'){
+                foreach($data['users'] as $user){
+                    $this->email->clear();
+                    $this->email->to($user['email']);
+                    $this->email->from($admin['email'],$admin['name']);
+                    $this->email->subject($data['subject']);
+                    $this->email->message($data['message']);
+                    $this->email->send();
+                }
+            }else{
+                    $this->email->from($admin['email'],$admin['name']);
+                    $this->email->to($data['users']['email']);
+                    $this->email->subject($data['subject']);
+                    $this->email->message($data['message']);
+                    $this->email->send();
+            }
    }
    public function add_client(){
    		$this->_load_addclient_view();

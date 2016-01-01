@@ -36,13 +36,19 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="<?php echo base_url('content/get_content_list'); ?>" <?php if($url=='content'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
                                 <span>Content Management</span>
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="<?php echo base_url('metakeyword/get_metakeyword_list'); ?>" <?php if($url=='metakeyword'){?> class="active" <?php }?>">
+                                <i class="fa fa fa-user"></i>
+                                <span>Metakeyword Management</span>
+                            </a>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="<?php echo base_url('settings/get_profile/'.$userdetails['id']); ?>" <?php if($url=='settings'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
                                 <span>Settings</span>
                             </a>
@@ -63,19 +69,25 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="<?php echo base_url('client/get_client_list'); ?>" <?php if($url=='client'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
-                                <span>Admin User Management</span>
+                                <span>Client Management</span>
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="<?php echo base_url('content/get_content_list/'); ?>" <?php if($url=='content'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
                                 <span>Content Management</span>
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="<?php echo base_url('metakeyword/get_metakeyword_list'); ?>" <?php if($url=='metakeyword'){?> class="active" <?php }?>">
+                                <i class="fa fa fa-user"></i>
+                                <span>Metakeyword Management</span>
+                            </a>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="<?php echo base_url('settings/get_profile/'.$userdetails['id']); ?>" <?php if($url=='settings'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
                                 <span>Settings</span>
                             </a>

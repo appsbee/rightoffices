@@ -11,12 +11,26 @@
                                 <button type="button" class="close close-sm" data-dismiss="alert">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <strong><?php echo validation_errors(); ?></strong>
+                                <?php echo validation_errors(); ?>
                             </div>
 							<?php }?>
-                        <header class="panel-heading">
-                            Update Admin
-                        </header>
+                        <!--<header class="panel-heading">
+                            Update Admin   <a  href='javascript:history.back()' class='btn btn-success'>Back</a>
+                        </header>    -->
+                        
+                            <header class="panel-heading">
+                        <div class="col-sm-12">
+                        <div class="col-sm-10 no-margin" style="padding-left:0;">
+                        <h4>Update Admin   </h4></div>
+                        <div class="col-sm-2">
+                        <div class="pull-right"> <a  href='javascript:history.back()' class='btn btn-success'>Back</a>     </div>
+                        
+                         </div>
+                         
+                         </div> <div class="clearfix"></div>           
+                    </header>
+                        
+                        
                         <div class="panel-body">
                             <div class="position-center">
                                 <form role="form" method="POST" action="<?php echo base_url('admin/update_admin_data');?>">
@@ -55,11 +69,11 @@
                                 <button type="button" class="close close-sm" data-dismiss="alert">
                                     <i class="fa fa-times"></i>
                                 </button>
-								<storng><?php echo $this->session->flashdata('msg'); ?></storng>
-                            </div>
+								<?php echo $this->session->flashdata('msg'); ?>
+                </div>
 				<?php }?> 
                         <header class="panel-heading">
-                            Change Password
+                            <h4>Change Password</h4>
                         </header>
                         <div class="panel-body">
                             <div class="position-center">

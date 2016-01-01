@@ -31,6 +31,34 @@ class Centre extends MY_Controller {
 		$centre_details=$this->mcentre->centre_details($CenterId);
 		echo json_encode($centre_details);
 	}
+    public function edit_centre($CentreId){
+        $centre_details=$this->mcentre->centre_details($CentreId);
+        $this->_load_centreedit_view($centre_details);
+    }
+    public function update_centre_data(){
+        $CentreId=$this->input->post('CentreId'); 
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('CentreDescription','Centre Description','required');
+        $this->form_validation->set_rules('OperatorCode','Operator Code','required');
+        $this->form_validation->set_rules('City','City','required');
+        $this->form_validation->set_rules('Address','Address','required'); 
+        $this->form_validation->set_rules('Postcode','Postcode','required');
+        if ($this->form_validation->run() == FALSE){
+             $centre_details=$this->mcentre->centre_details($CentreId);
+             $this->_load_centreedit_view($centre_details);
+        }else{
+             $data['CentreDescription']=$this->input->post('CentreDescription');
+             $data['OperatorCode']=$this->input->post('OperatorCode');
+             $data['City']=$this->input->post('City');
+             $data['Address']=$this->input->post('Address');
+             $data['Postcode']=$this->input->post('Postcode');
+             $condition['CentreId']=$CentreId;
+             $this->mcentre->update_centre($data,$condition);
+             $this->session->set_flashdata('msgtype','success');
+             $this->session->set_flashdata('msg','Centre update successfully done');
+             redirect(base_url('centre/get_centre_list'),'refresh');
+        }
+    }
 	public function _load_centrelist_view() {
 		  $data = array();
 		  $data['content'] = 'centrelist';
@@ -38,6 +66,12 @@ class Centre extends MY_Controller {
 		//  $data['links'] = $links;
 		  $this->load->view('layouts/index', $data);
 	}
+    public function _load_centreedit_view($centre_details){
+          $data = array();
+          $data['centre_details'] = $centre_details;
+          $data['content'] = 'editcentre';
+          $this->load->view('layouts/index', $data);
+    }
 	
 	
 }

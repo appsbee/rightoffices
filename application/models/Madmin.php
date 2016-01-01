@@ -142,8 +142,12 @@ class Madmin extends CI_Model {
         
  
     }
+    public function create_admin_user($data){
+        $this->db->insert('admin',$data);
+        return $this->db->insert_id();
+    }
 	public function user_check($email, $password) {
-		$this->db->select('email, name, phone_no, role');
+		$this->db->select('id,email, name, phone_no, role, profileimage');
 		$this->db->from('admin');
 		$this->db->where(array('email' => $email, 'password' => md5($password)));
 		$query = $this->db->get();
@@ -176,4 +180,12 @@ class Madmin extends CI_Model {
 		$this->db->where($condition);
 		$this->db->update('admin', $data); 
 	}
+    public function delete_image($orgimage){
+        $image= explode('.',$orgimage);   
+        $midmage=$image[0].'_mid.'.$image[1];
+        $smallmage=$image[0].'_small.'.$image[1];
+        unlink('upload/images/admin/'.$midmage);
+        unlink('upload/images/admin/'.$smallmage);
+        unlink('upload/images/admin/'.$orgimage); 
+    }
 }

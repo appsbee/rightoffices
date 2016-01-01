@@ -1,3 +1,4 @@
 .env
 .phpintel/
 composer.lock
+docs/
