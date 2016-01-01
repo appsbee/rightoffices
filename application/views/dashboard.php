@@ -30,6 +30,7 @@
                   Aenean porttitor vestibulum imperdiet. Ut auctor accumsan erat,
                   a vulputate metus tristique non. Aliquam aliquam vel orci quis sagittis.
                 </p> -->
+                <p>&nbsp;</p>
                 <a href="<?php echo base_url('settings/get_profile/'.$loginuser['id']); ?>" class="btn btn-primary">View Profile</a>
               </div>
             </div>
