@@ -8,28 +8,25 @@
         <link rel="shortcut icon" href="images/favicon.png">
         <title>Dashboard</title>
         <!--Core CSS -->
-    <link href="<?php echo base_url() ?>/public/bs3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>/public/css/bootstrap-reset.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>/public/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-    <!--dynamic table-->
-    <link href="<?php echo base_url() ?>/public/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
-    <link href="<?php echo base_url() ?>/public/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="<?php echo base_url() ?>/public/assets/data-tables/DT_bootstrap.css" />
-
-    <!-- Custom styles for this template -->
-    <link href="<?php echo base_url() ?>/public/css/style.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>/public/css/style-responsive.css" rel="stylesheet" />
-    
-    <link href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet"> 
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>   
-    <!-- ckeditor -->
-    <script src="<?php echo base_url() ?>public/ckeditor/ckeditor.js"></script>    
-
-    <!-- datepicker css 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">--> 
-    <!--<script src="< ?php echo base_url() ?>/public/js/lib/jquery.js"></script>  -->
-  		
+        <link href="<?php echo base_url() ?>/public/bs3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>/public/css/bootstrap-reset.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>/public/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <!--dynamic table-->
+        <link href="<?php echo base_url() ?>/public/assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+        <link href="<?php echo base_url() ?>/public/assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<?php echo base_url() ?>/public/assets/data-tables/DT_bootstrap.css" />
+        <!-- Custom styles for this template -->
+        <link href="<?php echo base_url() ?>/public/css/style.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>/public/css/style-responsive.css" rel="stylesheet" />
+        
+        <link href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <!-- ckeditor -->
+        <script src="<?php echo base_url() ?>public/ckeditor/ckeditor.js"></script>
+        <!-- datepicker css
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">-->
+        <!--<script src="< ?php echo base_url() ?>/public/js/lib/jquery.js"></script>  -->
+        
         <!-- Just for debugging purposes. Don't actually copy this line! -->
         <!--[if lt IE 9]><script src="js/ie8/ie8-responsive-file-warning.js"></script><![endif]-->
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -227,15 +224,15 @@
                     </ul>
                     <!--  notification end -->
                 </div>
-                <?php 
-                        $logindata=$this->session->userdata('admin');
-                        if(!empty($logindata['profileimage'])){
-                            $image= explode('.',$logindata['profileimage']);
-                            $user_image=$image[0].'_small.'.$image[1];
-                            $imagepath=base_url().'upload/images/admin/'.$user_image;
-                        }else{
-                            $imagepath=base_url().'public/images/lock_thumb.jpg';
-                        }  
+                <?php
+                $logindata=$this->session->userdata('admin');
+                if(!empty($logindata['profileimage'])){
+                $image= explode('.',$logindata['profileimage']);
+                $user_image=$image[0].'_small.'.$image[1];
+                $imagepath=base_url().'upload/images/admin/'.$user_image;
+                }else{
+                $imagepath=base_url().'public/images/lock_thumb.jpg';
+                }
                 ?>
                 <div class="top-nav clearfix">
                     <!--search & user info start-->
@@ -251,8 +248,8 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu extended logout">
-                                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                                <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li> -->
+                                <li><a href="<?php echo base_url('settings/get_profile/'.$logindata['id']); ?>"><i class="fa fa-cog"></i> Settings</a></li>
                                 <li><a href="<?php echo base_url('logout'); ?>"><i class="fa fa-key"></i> Log Out</a></li>
                             </ul>
                         </li>
