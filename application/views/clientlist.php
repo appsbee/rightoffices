@@ -63,8 +63,7 @@
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                  
+                  <tfoot>                  
                   </tfoot>
                 </table>
               </div>
@@ -93,9 +92,6 @@
     </div>
   </div>
   <!-- modal -->
-  
-  
-  
   <!-- Modal email -->
   <div class="modal fade" id="abcd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog" style="width:1000px;">
