@@ -6,7 +6,7 @@
 	<div class="col-md-12">
                 <section class="panel">
                     <div class="panel-body profile-information">
-                       <div class="col-md-3">
+                       <div class="col-md-2">
                            <div class="profile-pic text-center">
                                <?php 
                                   
@@ -21,7 +21,7 @@
                                <img src="<?php echo $imagepath; ?>" alt=""/>
                            </div>
                        </div>  
-                       <div class="col-md-6">
+                       <div class="col-md-5">
                            <div class="profile-desk">
                                <h1><?php  echo  $loginuser['name']; ?></h1>
                                <span class="text-muted"><?php echo  $loginuser['email']; ?></span>
@@ -33,8 +33,8 @@
                                <a href="<?php echo base_url('settings/get_profile/'.$loginuser['id']); ?>" class="btn btn-primary">View Profile</a>
                            </div>
                        </div>
-                       <!--<div class="col-md-3">
-                           <div class="profile-statistics">
+                       <div class="col-md-5">
+                          <!-- <div class="profile-statistics">
                                <h1>1240</h1>
                                <p>This Week Sales</p>
                                <h1>$5,61,240</h1>
@@ -56,8 +56,38 @@
                                        </a>
                                    </li>
                                </ul>
-                           </div>
-                       </div>   -->
+                           </div>-->
+                          <section class="panel">
+                        <header class="panel-heading">
+                            New registered user <span style="float:right;"><?php echo date('d-m-Y');?></span>
+                        </header>
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                 <?php if(!empty($users)){
+                                  $i=1;
+                                  foreach($users as $user){
+                                  ?>
+	                             <tr>
+	                             <td><?php echo $i; ?></td>
+	                             <td><?php echo $user['first_name'].' '.$user['last_name']; ?></td>
+	                             <td><?php echo $user['email']; ?></td>
+	                             </tr>
+                              <?php $i++; }
+                              }?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </section>
+                       </div>   
                     </div>
                 </section>
             </div>

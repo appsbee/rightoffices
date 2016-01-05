@@ -10,13 +10,20 @@ class Mclient extends CI_Model {
         return $this->db->count_all("enquiry");
     }
     public function all_client_list(){
+        $start_date='';
+        $end_date='';
+        if(isset($_REQUEST['start_date']) && $_REQUEST['start_date']!='' && isset($_REQUEST['end_date']) && $_REQUEST['end_date']!=''){
+            $start_date= $_REQUEST['start_date'];
+            $end_date= $_REQUEST['end_date'];
+        }
         $aColumns = array(
             'id',
             'id',
             'first_name',
             'last_name',
             'email',
-            'company'
+            'company',
+            'created_at'
             );
         /* Indexed column (used for fast and accurate table cardinality) */
         $sIndexColumn = "id";
@@ -110,8 +117,19 @@ class Mclient extends CI_Model {
          * SQL queries
          * Get data to display
          */
+         if($sWhere!=''){
+             if(isset($start_date) && $start_date!='' && isset($end_date) && $end_date!=''){
+              $sWhere.=" and created_at >='".$start_date."' and  created_at <= '".$end_date."' ";   
+             }
+         }else{
+             if(isset($start_date) && $start_date!='' && isset($end_date) && $end_date!=''){
+             $sWhere.=" where  created_at >='".$start_date."' and created_at <= '".$end_date."' ";
+             }
+         }
+         
          $sQuery = "SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
-                    FROM enquiry $sWhere $sOrder $sLimit";
+                    FROM enquiry $sWhere $sOrder $sLimit"; 
+
          
         $rResult = $this->db->query($sQuery);
         /* Data set length after filtering */
@@ -135,7 +153,11 @@ class Mclient extends CI_Model {
                 if($i==1){
                 $row[] = "<input type='checkbox' name='mail' value='".$aRow[$col]."'>";        
                 }else{
-                $row[] = $aRow[$col];    
+                 if($col == 'created_at'){
+                    $row[] = date('Y-m-d',strtotime($aRow[$col])); 
+                 }else{
+                    $row[] = $aRow[$col];     
+                 }   
                 }
                 $i++;
             }
@@ -189,4 +211,12 @@ class Mclient extends CI_Model {
         $query=$this->db->query($sql);
         return $query->result_array(); 
 	}
+    public function last_five_user(){
+        $this->db->select('*');
+        $this->db->from('enquiry');
+        $this->db->order_by("created_at", "desc");
+        $this->db->limit(5);
+        $query=$this->db->get();
+        return $query->result_array();
+    }
 }

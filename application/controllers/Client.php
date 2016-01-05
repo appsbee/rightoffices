@@ -15,18 +15,6 @@ class Client extends MY_Controller {
     }
 	public function get_client_list(){
         $this->_load_clientlist_view();
-	     /* $this->load->library("pagination"); 
-		  $config = array();
-          $config["base_url"] = base_url() . "client/get_client_list";
-          $config["total_rows"] = $this->mclient->record_count();
-          $config["per_page"] = 2;
-          $config["uri_segment"] = 3;
-		  $config["num_links"]=5;
-		  $this->pagination->initialize($config);
-		  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-          $links = $this->pagination->create_links();	
-		  $clientlist= $this->mclient->client_list($config["per_page"], $page);
-		  $this->_load_clientlist_view($clientlist, $links);   */
    }
    public function delete_client(){
    		  $user_id=$this->input->post('user_id');

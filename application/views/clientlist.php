@@ -32,7 +32,15 @@
                     <header class="panel-heading">
                         <div class="col-sm-12">
                         <div class="col-sm-10 no-margin" style="padding-left:0;">
-                        <h4>Client List </h4></div>
+                        <h4>Client List </h4>
+                        <form>
+                            <tr>
+                            <td>Start Date</td><td><input type="text" name="start_date" id="start_date" /></td>
+                            <td>End Date</td><td><input type="text" name="end_date" id="end_date" /></td>
+                            <td></td><td><input type="button" name="submit" id="clientsearch" value="Search" /></td>
+                            </tr>
+                            </form>
+                        </div>
                         <div class="col-sm-2">
                         <div class="pull-left"> </div>
 
@@ -61,6 +69,7 @@
                            <th>Lastname</th>
                            <th>Email</th>
                            <th>Company</th>
+                           <th>Date</th>
                            <th>Action</th>
                     </tr>
                     </thead>
@@ -140,15 +149,22 @@ $(document).ready(function(){
      var table=$('#example').DataTable({
                     "processing": true,
                     "serverSide": true,
-                    "ajax": "<?php echo base_url('client/get_all_client_list'); ?>",
+                    "ajax": {
+                        "url" : "<?php echo base_url('client/get_all_client_list'); ?>",
+                        "data": function ( d ) {
+                                d.start_date = $('#start_date').val();
+                                d.end_date = $('#end_date').val();
+                                
+                            }
+                    },
                     "columnDefs": [ {
                     "targets": -1,
-                    "data": null,
                     "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='todo-remove' href='#' style='margin-left:20px;'><i class='ico-close'></i></a><a class='clientview' data-toggle='modal' href='#clientview' style='margin-left:20px;'><i class='glyphicon glyphicon-list'></i></a>"
                      } ] 
                      
 
                 });
+                
             var dtable = $("#example").dataTable().api();
             $(".dataTables_filter input")
                 .unbind() 
@@ -215,8 +231,26 @@ $(document).ready(function(){
                      }
                 }); 
     } );
-	//$( "#start_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-	//$( "#end_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	$( "#start_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	$( "#end_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+     $('#clientsearch').click(function(){
+        table.draw();
+     });    
+  /*    $.fn.dataTable.ext.search.push( function( oSettings, aData, iDataIndex ) { 
+        var fromDateG = $('#start_date').val(); 
+        var toDateG = $('#end_date').val(); 
+        var iDate=aData[6];
+        if ( fromDateG == "" && toDateG == "" ){
+            return true;
+        }else if ( fromDateG == "" && iDate < toDateG ){
+            return true;
+        }else if ( fromDateG <= iDate && toDateG == ""  ){
+            return true;
+        }else if ( fromDateG <= iDate && iDate <= toDateG ){
+            return true;
+        }
+        return false;
+    });*/
 	$('.dash').click(function() {   
   		var name= this.name;
         var id=new Array();

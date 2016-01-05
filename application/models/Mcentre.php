@@ -168,5 +168,12 @@ class Mcentre extends CI_Model {
 		$query=$this->db->get();
 		return $query->result_array(); 
 	}
+    public function add_meta_keywords($centreid,$keywords,$contents){
+        for($i=0;$i<count($keywords);$i++){
+            $centre_meta= array('centreid'=>$centreid,'keyword'=>$keywords[$i],'content'=>$contents[$i]);
+            $all_centre[]=$centre_meta;
+        }
+        $this->db->insert_batch('centre_metakeyword',$all_centre);
+    }
 	
 }

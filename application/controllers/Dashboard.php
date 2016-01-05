@@ -7,14 +7,17 @@ class Dashboard extends MY_Controller {
 		parent::__construct();
 		$this->redirect_guest();
 		$this->load->model('mdashboard');
+        $this->load->model('mclient');
 	}
 
 	public function index() {
-		$this->_load_dashboard_view();
+        $top_five_user=$this->mclient->last_five_user();
+		$this->_load_dashboard_view($top_five_user);
 	}
 
-	private function _load_dashboard_view() {
+	private function _load_dashboard_view($top_five_user) {
 		$data = array();
+        $data['users'] = $top_five_user;
 		$data['content'] = 'dashboard';
 		$this->load->view('layouts/index', $data);
 	}

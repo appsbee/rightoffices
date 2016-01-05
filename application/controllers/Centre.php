@@ -59,6 +59,23 @@ class Centre extends MY_Controller {
              redirect(base_url('centre/get_centre_list'),'refresh');
         }
     }
+    public function add_metakeyword_details(){
+        $centreid=$this->input->post('CentreId');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('keyword[]', 'Keyword', 'required');
+        $this->form_validation->set_rules('content[]', 'Content', 'required');
+        if ($this->form_validation->run() == FALSE){
+               $centre_details=$this->mcentre->centre_details($centreid);
+               $this->_load_centreedit_view($centre_details);
+        }else{
+              $keywords=$this->input->post('keyword');
+              $contents=$this->input->post('content');
+              $this->mcentre->add_meta_keywords($centreid,$keywords,$contents);
+              $this->session->set_flashdata('msgtype', 'success');
+              $this->session->set_flashdata('msg', 'Metakeyword added successfully');
+              redirect(base_url('centre/get_centre_list'),'refresh');
+        }
+    }
 	public function _load_centrelist_view() {
 		  $data = array();
 		  $data['content'] = 'centrelist';
