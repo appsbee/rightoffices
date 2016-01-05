@@ -59,7 +59,7 @@
                            </div>-->
                           <section class="panel">
                         <header class="panel-heading">
-                            New Enquiries <span style="float:right;"><?php echo date('d-m-Y');?></span>
+                            <strong>New Enquiries</strong>&nbsp;( <?php echo date('M d, Y', time()); ?> ) <span style="float:right;"><a href="<?php echo base_url('client/get_client_list'); ?>"><button class="btn btn-xs btn-info">View All</button></a></span>
                         </header>
                         <div class="panel-body">
                             <table class="table">
