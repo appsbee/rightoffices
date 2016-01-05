@@ -212,7 +212,7 @@ class Mclient extends CI_Model {
         return $query->result_array(); 
 	}
     public function last_five_user(){
-        $this->db->select('*');
+        $this->db->select('CONCAT(`first_name`, " ", `last_name`) AS `name`, `email`, UNIX_TIMESTAMP(`created_at`) AS `created`', FALSE);
         $this->db->from('enquiry');
         $this->db->order_by("created_at", "desc");
         $this->db->limit(5);

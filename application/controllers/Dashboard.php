@@ -12,6 +12,7 @@ class Dashboard extends MY_Controller {
 
 	public function index() {
         $top_five_user=$this->mclient->last_five_user();
+        // echo '<pre>'; print_r($top_five_user);die;
 		$this->_load_dashboard_view($top_five_user);
 	}
 

@@ -59,7 +59,7 @@
                            </div>-->
                           <section class="panel">
                         <header class="panel-heading">
-                            <strong>New Enquiries</strong>&nbsp;( <?php echo date('M d, Y', time()); ?> ) <span style="float:right;"><a href="<?php echo base_url('client/get_client_list'); ?>"><button class="btn btn-xs btn-info">View All</button></a></span>
+                            New Enquiries <span style="float:right;"><a href="<?php echo base_url('client/get_client_list'); ?>"><button class="btn btn-xs btn-info">View All</button></a></span>
                         </header>
                         <div class="panel-body">
                             <table class="table">
@@ -68,6 +68,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Enquired On</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -77,8 +78,9 @@
                                   ?>
 	                             <tr>
 	                             <td><?php echo $i; ?></td>
-	                             <td><?php echo $user['first_name'].' '.$user['last_name']; ?></td>
-	                             <td><?php echo $user['email']; ?></td>
+	                             <td><?php echo $user['name']; ?></td>
+                               <td><?php echo $user['email']; ?></td>
+	                             <td><?php echo date('M d, Y', $user['created']); ?></td>
 	                             </tr>
                               <?php $i++; }
                               }?>
