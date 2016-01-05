@@ -10,44 +10,65 @@ class Fepi extends MY_Controller {
 	}
 
 	public function update_data() {
-		echo 'Error in loading data.Please try again later';
+		// ini_set('memory_limit', '-1');
+		// $xmldata = simplexml_load_string(file_get_contents('/var/www/html/slate/output.xml')) or die("Error: Cannot create object");
+		// $xml = $this->object_to_array($xmldata);
+		// echo '<pre>print_r($xml); die;
+		// $this->mfepi->set_new_data($xml);die;
+		if ($this->input->post('type') != '') {
+
+			ini_set('memory_limit', '-1');
+			$type = $this->input->post('type');
+			// $type = 'new';
+			// echo $type; die;
+			$url = 'http://fred.instantoffices.com/fepi/FEPIDatafeed5.aspx';
+			$partnerName = 'rightoffices';
+			$partnerPassword = 'Madrid55';
+			$post_data = array(
+				"pname" => $partnerName,
+				"password" => $partnerPassword,
+				"country" => "GB",
+				"types" => "1,2,3,4,5",
+				// "types" => "2",
+			);
+			$ch = curl_init($url);
+			$opts[CURLOPT_POST] = true;
+			$opts[CURLOPT_POSTFIELDS] = $post_data;
+			foreach ($opts as $k => $v) {
+				$opts[$k] = $v;
+			}
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt_array($ch, $opts);
+			$output = curl_exec($ch);
+			curl_close($ch);
+			$xmldata = simplexml_load_string($output) or die("Error: Cannot create object");
+			$xml = $this->object_to_array($xmldata);
+			if ($type == 'old') {
+				$status = $this->mfepi->set_existing_data($xml);
+			} else {
+				$status = $this->mfepi->set_new_data($xml);
+			}
+			if ($status) {
+				$result = array(
+					'status' => 1,
+					'error' => 'Success',
+				);
+			} else {
+				$result = array(
+					'status' => 1,
+					'error' => 'Error in loading data.Please try again later',
+				);
+			}
+		} else {
+			$result = array(
+				'status' => 0,
+				'error' => 'Invalid request',
+			);
+		}
+		echo header('Content-Type: application/json');
+		echo json_encode($result);
 		die;
-		ini_set('memory_limit', '-1');
-		$type = $this->input->post('type');
-		// for test
-		$type = 'old';
-		//echo $type; die;
-		$url = 'http://fred.instantoffices.com/fepi/FEPIDatafeed5.aspx';
-		$partnerName = 'rightoffices';
-		$partnerPassword = 'Madrid55';
-		$post_data = array(
-			"pname" => $partnerName,
-			"password" => $partnerPassword,
-			"country" => "GB",
-			"types" => "1,2,3,4,5",
-		);
-		$ch = curl_init($url);
-		$opts[CURLOPT_POST] = true;
-		$opts[CURLOPT_POSTFIELDS] = $post_data;
-		foreach ($opts as $k => $v) {
-			$opts[$k] = $v;
-		}
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt_array($ch, $opts);
-		$output = curl_exec($ch);
-		curl_close($ch);
-		$xmldata = simplexml_load_string($output) or die("Error: Cannot create object");
-		$xml = $this->object_to_array($xmldata);
-		if ($type == 'old') {
-			$status = $this->mfepi->set_existing_data($xml);
-		} else {
-			$status = $this->mfepi->set_new_data($xml);
-		}
-		if ($status) {
-			echo 'Success';
-		} else {
-			echo 'Error in loading data.Please try again later';
-		}
+
 	}
 
 	public function object_to_array($obj) {

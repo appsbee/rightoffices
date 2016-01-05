@@ -60,7 +60,7 @@
                     <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="Enter phone no" value="<?php echo $admin_details['phone_no'];?>">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">Profile Image</label>
+                    <label for="exampleInputFile">Image</label>
                     <input type="file" class="exampleInputFile" id="image" name="image">
                   </div>
                   <input type="hidden" name="user_id" id="user_id" value="<?php echo $admin_details['id'];?>" />
@@ -99,7 +99,7 @@
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <section class="panel">
+          <section class="panel messages-container">
             
             <header class="panel-heading">
               <h4>SYNC FEPI DATA</h4>
@@ -108,11 +108,11 @@
               <div class="position-center">
                 <div class="radio single-row">
                   <input tabindex="3" type="radio"  value="old"  id="old" name="synctype" checked="checked">
-                  <label class='control-label' for="old"><strong>Only new FEPI data and keep the prior changes</strong></label>
+                  <label class='control-label' for='old'><strong>Only new FEPI data and keep the prior changes</strong></label>
                 </div>
                 <div class="radio single-row">
                   <input tabindex="3" type="radio"  value="new"  id="new" name="synctype">
-                  <label class='control-label' for="new"><strong>Purge the local FEPI data and re-sync all </strong></label>
+                  <label class='control-label' for='new'><strong>Purge the local FEPI data and re-sync all </strong></label>
                 </div>
                 <div style="position:relative;"><button type="button" class="btn btn-info" id='syncbtn'>Sync</button>
                   <div id="loader" style="display:none; position: absolute; bottom:1px; left:60px;">
@@ -147,7 +147,17 @@
           dataType: 'text',
           data: 'type=' + type,
           success: function(msg) {
-            alert(msg);
+            msg = JSON.parse(msg);
+            var message = '', classStr = '';
+            if(msg.status){
+              message = 'Sync successfull.';
+              classStr = 'success';
+            }else{
+              message = 'Some error occured while sycning, Please try again.';
+              classStr = 'danger';
+            }
+            var str = '<div class="alert alert-' + classStr + ' alert-block fade in"><button type="button" class="close close-sm" data-dismiss="alert"><i class="fa fa-times"></i></button>' + message + '</div>';
+            $('.messages-container').prepend(str);
             $('#loader').hide();
             $('#syncbtn').prop('disabled', false);
           }

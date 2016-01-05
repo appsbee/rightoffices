@@ -16,7 +16,8 @@ class Mclient extends CI_Model {
             'first_name',
             'last_name',
             'email',
-            'company'
+            'company',
+            'created_at'
             );
         /* Indexed column (used for fast and accurate table cardinality) */
         $sIndexColumn = "id";
@@ -135,7 +136,11 @@ class Mclient extends CI_Model {
                 if($i==1){
                 $row[] = "<input type='checkbox' name='mail' value='".$aRow[$col]."'>";        
                 }else{
-                $row[] = $aRow[$col];    
+                 if($col == 'created_at'){
+                    $row[] = date('Y-m-d',strtotime($aRow[$col])); 
+                 }else{
+                    $row[] = $aRow[$col];     
+                 }   
                 }
                 $i++;
             }
