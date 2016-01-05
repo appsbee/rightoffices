@@ -1,4 +1,4 @@
- <!--main content start-->
+<!--main content start-->
             <?php $loginuser=$this->session->userdata('admin');    ?>
             <section id="main-content">
                 <section class="wrapper">
@@ -90,9 +90,4 @@
                        </div>   
                     </div>
                 </section>
-            </div>
-</div>
-                  
-                </section>
-            </section>
-            <!--main content end-->
+

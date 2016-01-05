@@ -10,6 +10,7 @@ class Client extends MY_Controller {
 		  $this->load->model('madminnote');
 	}	
     public function get_all_client_list(){
+    	// echo '<pre>'; print_r($_REQUEST);die;
         $data=$this->mclient->all_client_list();
         echo json_encode($data);
     }

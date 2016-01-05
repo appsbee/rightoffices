@@ -6,6 +6,7 @@ class Login extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('madmin');
+		$this->redirect_user();
 	}
 
 	public function index() {
@@ -25,19 +26,15 @@ class Login extends MY_Controller {
 					$this->_load_login_view();
 				} else {
 					$this->session->set_userdata('admin', $userdata);
-					redirect('dashboard','refresh');
-				}	
+					redirect('dashboard', 'refresh');
+				}
 			}
 		} else {
-            if($this->is_logged_in()){
-              redirect('dashboard','refresh');  
-            }else{
-              $this->_load_login_view();   
-            }
+			$this->_load_login_view();
 		}
 	}
 
-	public function _load_login_view() {
+	private function _load_login_view() {
 		$data = array();
 		$data['content'] = 'login';
 		$this->load->view('layouts/login', $data);

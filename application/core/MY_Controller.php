@@ -16,4 +16,10 @@ class MY_Controller extends CI_Controller {
 			redirect('login', 'refresh');
 		}
 	}
+
+	protected function redirect_user() {
+		if ($this->session->userdata('admin')) {
+			redirect('dashboard', 'refresh');
+		}
+	}
 }
