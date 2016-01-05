@@ -154,7 +154,7 @@
         },
         "columnDefs": [{
           "targets": -1,
-          "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='todo-remove' href='#' style='margin-left:20px;'><i class='ico-close'></i></a><a class='clientview' data-toggle='modal' href='#clientview' style='margin-left:20px;'><i class='glyphicon glyphicon-list'></i></a>"
+          "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='todo-remove' href='#' style='margin-left:20px;'><i class='ico-close'></i></a><a class='clientview' data-toggle='modal' href='#clientview' style='margin-left:20px;'><i class='glyphicon glyphicon-eye-open'></i></a>"
         }]
 
       });
