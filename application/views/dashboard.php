@@ -59,7 +59,7 @@
                            </div>-->
                           <section class="panel">
                         <header class="panel-heading">
-                            New registered user <span style="float:right;"><?php echo date('d-m-Y');?></span>
+                            New Enquiries <span style="float:right;"><?php echo date('d-m-Y');?></span>
                         </header>
                         <div class="panel-body">
                             <table class="table">

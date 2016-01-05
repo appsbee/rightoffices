@@ -69,7 +69,6 @@ class Fepi extends MY_Controller {
 		echo header('Content-Type: application/json');
 		echo json_encode($result);
 		die;
-
 	}
 
 	public function object_to_array($obj) {
@@ -85,7 +84,6 @@ class Fepi extends MY_Controller {
 		} else {
 			$new = $obj;
 		}
-
 		return $new;
 	}
 }
