@@ -48,7 +48,7 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="<?php echo base_url('settings/get_profile'); ?>" <?php if($url=='settings'){?> class="active" <?php }?>">
+                            <a href="<?php echo base_url('settings'); ?>" <?php if($url=='settings'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
                                 <span>Settings</span>
                             </a>
@@ -87,7 +87,7 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="<?php echo base_url('settings/get_profile'); ?>" <?php if($url=='settings'){?> class="active" <?php }?>">
+                            <a href="<?php echo base_url('settings'); ?>" <?php if($url=='settings'){?> class="active" <?php }?>">
                                 <i class="fa fa fa-user"></i>
                                 <span>Settings</span>
                             </a>

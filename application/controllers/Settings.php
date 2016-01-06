@@ -8,7 +8,7 @@ class Settings extends MY_Controller {
 		$this->redirect_guest();
 		$this->load->model('madmin');
 	}
-	public function get_profile() {
+	public function index() {
 		$user=$this->session->userdata('admin');
 		$admin_details = $this->madmin->get_user_details($user['id']);
 		$this->_load_adminedit_view($admin_details);
@@ -42,7 +42,7 @@ class Settings extends MY_Controller {
 									$erro_msg = $this->upload->display_errors();
 									$this->session->set_flashdata('msgtype', 'error');
 									$this->session->set_flashdata('msg', $erro_msg);
-									redirect(base_url('settings/get_profile/'), 'refresh');
+									redirect(base_url('settings'), 'refresh');
 								} else {
 									$thumbpath="upload/$user_id/image/thumbs/";
 									$fInfo = $this->upload->data();
@@ -60,7 +60,7 @@ class Settings extends MY_Controller {
 									$this->session->set_userdata('admin', $userdata);
 									$this->session->set_flashdata('msgtype', 'success');
 									$this->session->set_flashdata('msg', 'Settings updated successfuly');
-									redirect(base_url('settings/get_profile/'), 'refresh');
+									redirect(base_url('settings'), 'refresh');
 								}
 					 }else{
 					 	if(mkdir('./upload/'.$user_id) && mkdir('./upload/'.$user_id.'/image') && mkdir('./upload/'.$user_id.'/image/thumbs')){
@@ -75,7 +75,7 @@ class Settings extends MY_Controller {
 									$erro_msg = $this->upload->display_errors();
 									$this->session->set_flashdata('msgtype', 'error');
 									$this->session->set_flashdata('msg', $erro_msg);
-									redirect(base_url('settings/get_profile/'), 'refresh');
+									redirect(base_url('settings'), 'refresh');
 								} else {
 									$thumbpath="upload/$user_id/image/thumbs/";
 									//$imagepath="upload/$user_id/image/";
@@ -118,7 +118,7 @@ class Settings extends MY_Controller {
 									$erro_msg = $this->upload->display_errors();
 									$this->session->set_flashdata('msgtype', 'error');
 									$this->session->set_flashdata('msg', $erro_msg);
-									redirect(base_url('settings/get_profile/'), 'refresh');
+									redirect(base_url('settings'), 'refresh');
 								} else {
 									$thumbpath="upload/$user_id/image/thumbs/";
 									//$imagepath="upload/$user_id/image/";
@@ -138,7 +138,7 @@ class Settings extends MY_Controller {
 									$this->session->set_userdata('admin', $userdata);
 									$this->session->set_flashdata('msgtype', 'success');
 									$this->session->set_flashdata('msg', 'Settings updated successfuly');
-									redirect(base_url('settings/get_profile/'), 'refresh');
+									redirect(base_url('settings'), 'refresh');
 								}
 							}else{
 								    $this->session->set_flashdata('msgtype', 'success');
@@ -168,7 +168,7 @@ class Settings extends MY_Controller {
 					$erro_msg = $this->upload->display_errors();
 					$this->session->set_flashdata('msgtype', 'error');
 					$this->session->set_flashdata('msg', $erro_msg);
-					redirect(base_url('settings/get_profile/' . $user_id), 'refresh');
+					redirect(base_url('settings' . $user_id), 'refresh');
 				} else {
 					$fInfo = $this->upload->data();
 					$image = explode('.', $fInfo['file_name']);
@@ -186,7 +186,7 @@ class Settings extends MY_Controller {
 					$this->session->set_userdata('admin', $userdata);
 					$this->session->set_flashdata('msgtype', 'success');
 					$this->session->set_flashdata('msg', 'Settings updated successfuly');
-					redirect(base_url('settings/get_profile/' . $user_id), 'refresh');
+					redirect(base_url('settings' . $user_id), 'refresh');
 				}*/
 			} else {
 				$this->madmin->user_update($data, $condition);
@@ -194,7 +194,7 @@ class Settings extends MY_Controller {
 				$this->session->set_userdata('admin', $userdata);
 				$this->session->set_flashdata('msgtype', 'success');
 				$this->session->set_flashdata('msg', 'Settings updated successfuly');
-				redirect(base_url('settings/get_profile/'), 'refresh');
+				redirect(base_url('settings'), 'refresh');
 			}
 		}
 	}
@@ -238,14 +238,14 @@ class Settings extends MY_Controller {
 			if ($password != $confirm_password) {
 				$this->session->set_flashdata('msgtype', 'error');
 				$this->session->set_flashdata('msg', 'Password field does not match with confirm password');
-				redirect(base_url('settings/get_profile/' . $user_id), 'refresh');
+				redirect(base_url('settings' . $user_id), 'refresh');
 			} else {
 				$condition['id'] = $user_id;
 				$data['password'] = md5($password);
 				$this->madmin->change_user_password($data, $condition);
 				$this->session->set_flashdata('msgtype', 'success');
 				$this->session->set_flashdata('msg', 'Password changed successfully');
-				redirect(base_url('settings/get_profile/' . $user_id), 'refresh');
+				redirect(base_url('settings' . $user_id), 'refresh');
 			}
 		}
 	}
