@@ -180,12 +180,15 @@ class Madmin extends CI_Model {
 		$this->db->where($condition);
 		$this->db->update('admin', $data); 
 	}
-    public function delete_image($orgimage){
-        $image= explode('.',$orgimage);   
-        $midmage=$image[0].'_mid.'.$image[1];
-        $smallmage=$image[0].'_small.'.$image[1];
-        unlink('upload/images/admin/'.$midmage);
-        unlink('upload/images/admin/'.$smallmage);
-        unlink('upload/images/admin/'.$orgimage); 
+    public function delete_image($orgimage,$user_id){
+        if(!empty($orgimage) && isset($orgimage)){
+            $image= explode('.',$orgimage);   
+            $midmage=$image[0].'_mid.'.$image[1];
+            $smallmage=$image[0].'_small.'.$image[1];
+            @unlink("upload/$user_id/image/thumbs/".$midmage);
+            @unlink("upload/$user_id/image/thumbs/".$smallmage);
+            @unlink("upload/$user_id/image/".$orgimage); 
+        }
+
     }
 }

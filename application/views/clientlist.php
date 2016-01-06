@@ -33,13 +33,7 @@
             <div class="col-sm-12">
               <div class="col-sm-10 no-margin" style="padding-left:0;">
                 <h4>Client List </h4>
-                <form>
-                  <tr>
-                    <td><label for="start_date">Start Date</label></td><td><input type="text" name="start_date" id="start_date" /></td>
-                    <td><label for="end_date">End Date</label></td><td><input type="text" name="end_date" id="end_date" /></td>
-                    <td></td><td><input type="button" name="submit" id="clientsearch" value="Search" /></td>
-                  </tr>
-                </form>
+                
               </div>
               <div class="col-sm-2">
                 <div class="pull-left"> </div>
@@ -49,6 +43,13 @@
             <div class="panel-body">
               <div class="adv-table">
                 <div class="clearfix">
+                <form>
+                  <tr>
+                    <td><label for="start_date">Start Date</label></td><td><input type="text" name="start_date" id="start_date" /></td>
+                    <td><label for="end_date">End Date</label></td><td><input type="text" name="end_date" id="end_date" /></td>
+                    <td></td><td><input type="button" name="submit" id="clientsearch" value="Search" /></td>
+                  </tr>
+                </form>
                   <div class="btn-group pull-right">
                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                     </button>

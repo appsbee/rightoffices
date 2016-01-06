@@ -27,8 +27,126 @@ class Admin extends MY_Controller {
 			$data['phone_no'] = $this->input->post('phone_no');
 			$data['created_at'] = date('Y-m-d H:i:s');
 			$data['role'] = 'A';
+			$user_id = $this->madmin->create_admin_user($data);
 			if ($_FILES['image']['name'] != '') {
-				$config['upload_path'] = 'upload/images/admin/';
+				if(file_exists('./upload')){
+					 if(file_exists('./upload/'.$user_id)){
+					 			$config['upload_path'] = "upload/$user_id/image/";
+								$config['allowed_types'] = 'gif|jpg|jpeg|png';
+								$config['max_size'] = '1000';
+								$config['max_width'] = '1920';
+								$config['max_height'] = '1280';
+								$config['encrypt_name'] = TRUE;
+								$this->load->library('upload', $config);
+								if (!$this->upload->do_upload('image')) {
+									$erro_msg = $this->upload->display_errors();
+									$this->session->set_flashdata('msgtype', 'error');
+									$this->session->set_flashdata('msg', $erro_msg);
+									redirect(base_url('admin/add_admin'), 'refresh');
+								} else {
+									$thumbpath="upload/$user_id/image/thumbs/";
+									//$imagepath="upload/$user_id/image/";
+									$fInfo = $this->upload->data();
+									$image = explode('.', $fInfo['file_name']);
+									$mid_image = $image[0] . '_mid.' . $image[1];
+									$small_image = $image[0] . '_small.' . $image[1];
+									$data['profileimage']=$fInfo['file_name'];
+									$condition['id']=$user_id;
+									$this->madmin->user_update($data,$condition);
+									$this->image_thumb($fInfo['full_path'],$thumbpath, $mid_image, 250, 200);
+									$this->image_thumb($fInfo['full_path'],$thumbpath, $small_image, 50, 50);
+									$data['profileimage'] = $fInfo['file_name'];
+									$this->session->set_flashdata('msgtype', 'success');
+									$this->session->set_flashdata('msg', 'Admin added successfuly');
+									redirect(base_url('admin/get_admin_list'), 'refresh');
+								}
+					 }else{
+					 	if(mkdir('./upload/'.$user_id) && mkdir('./upload/'.$user_id.'/image') && mkdir('./upload/'.$user_id.'/image/thumbs')){
+					 		    $config['upload_path'] = "upload/$user_id/image/";
+								$config['allowed_types'] = 'gif|jpg|jpeg|png';
+								$config['max_size'] = '1000';
+								$config['max_width'] = '1920';
+								$config['max_height'] = '1280';
+								$config['encrypt_name'] = TRUE;
+								$this->load->library('upload', $config);
+								if (!$this->upload->do_upload('image')) {
+									$erro_msg = $this->upload->display_errors();
+									$this->session->set_flashdata('msgtype', 'error');
+									$this->session->set_flashdata('msg', $erro_msg);
+									redirect(base_url('admin/add_admin'), 'refresh');
+								} else {
+									$thumbpath="upload/$user_id/image/thumbs/";
+									//$imagepath="upload/$user_id/image/";
+									$fInfo = $this->upload->data();
+									$data['profileimage']=$fInfo['file_name'];
+									$condition['id']=$user_id;
+									$this->madmin->user_update($data,$condition);
+									$image = explode('.', $fInfo['file_name']);
+									$mid_image = $image[0] . '_mid.' . $image[1];
+									$small_image = $image[0] . '_small.' . $image[1];
+									$this->image_thumb($fInfo['full_path'],$thumbpath, $mid_image, 250, 200);
+									$this->image_thumb($fInfo['full_path'],$thumbpath, $small_image, 50, 50);
+									$data['profileimage'] = $fInfo['file_name'];
+									$this->session->set_flashdata('msgtype', 'success');
+									$this->session->set_flashdata('msg', 'Admin added successfuly');
+									redirect(base_url('admin/get_admin_list'), 'refresh');
+								}
+					 	}else{
+					 				$this->session->set_flashdata('msgtype', 'success');
+									$this->session->set_flashdata('msg', 'Error in creating image folder');
+									redirect(base_url('admin/get_admin_list'), 'refresh');
+					 	}
+					 }
+				}else{
+					if(mkdir('./upload')){
+						if(mkdir('./upload/'.$user_id)){
+							if(mkdir('./upload/'.$user_id.'/image') && mkdir('./upload/'.$user_id.'/image/thumbs')){
+								$config['upload_path'] = "upload/$user_id/image/";
+								$config['allowed_types'] = 'gif|jpg|jpeg|png';
+								$config['max_size'] = '1000';
+								$config['max_width'] = '1920';
+								$config['max_height'] = '1280';
+								$config['encrypt_name'] = TRUE;
+								$this->load->library('upload', $config);
+								if (!$this->upload->do_upload('image')) {
+									$erro_msg = $this->upload->display_errors();
+									$this->session->set_flashdata('msgtype', 'error');
+									$this->session->set_flashdata('msg', $erro_msg);
+									redirect(base_url('admin/add_admin'), 'refresh');
+								} else {
+									$thumbpath="upload/$user_id/image/thumbs/";
+									//$imagepath="upload/$user_id/image/";
+									$fInfo = $this->upload->data();
+									$data['profileimage']=$fInfo['file_name'];
+									$condition['id']=$user_id;
+									$this->madmin->user_update($data,$condition);
+									$image = explode('.', $fInfo['file_name']);
+									$mid_image = $image[0] . '_mid.' . $image[1];
+									$small_image = $image[0] . '_small.' . $image[1];
+									$this->image_thumb($fInfo['full_path'],$thumbpath, $mid_image, 250, 200);
+									$this->image_thumb($fInfo['full_path'],$thumbpath, $small_image, 50, 50);
+									$data['profileimage'] = $fInfo['file_name'];
+									$this->session->set_flashdata('msgtype', 'success');
+									$this->session->set_flashdata('msg', 'Admin added successfuly');
+									redirect(base_url('admin/get_admin_list'), 'refresh');
+								}
+							}else{
+								    $this->session->set_flashdata('msgtype', 'success');
+									$this->session->set_flashdata('msg', 'image DIR error');
+									redirect(base_url('admin/get_admin_list'), 'refresh');
+							}
+						}else{
+									$this->session->set_flashdata('msgtype', 'success');
+									$this->session->set_flashdata('msg', 'userid DIR error');
+									redirect(base_url('admin/get_admin_list'), 'refresh');
+						}
+					}else{
+									$this->session->set_flashdata('msgtype', 'success');
+									$this->session->set_flashdata('msg', 'upload DIR error');
+									redirect(base_url('admin/get_admin_list'), 'refresh');
+					}
+				}
+				/*$config['upload_path'] = 'upload/images/admin/';
 				$config['allowed_types'] = 'gif|jpg|jpeg|png';
 				$config['max_size'] = '1000';
 				$config['max_width'] = '1920';
@@ -58,10 +176,10 @@ class Admin extends MY_Controller {
 						$this->session->set_flashdata('msg', 'Error in create admin.Please try again');
 						redirect(base_url('admin/add_admin'), 'refresh');
 					}
-				}
+				}*/
 			} else {
-				$status = $this->madmin->create_admin_user($data);
-				if ($status) {
+				//$status = $this->madmin->create_admin_user($data);
+				if ($user_id) {
 					$this->session->set_flashdata('msgtype', 'success');
 					$this->session->set_flashdata('msg', 'Admin added successfuly');
 					redirect(base_url('admin/get_admin_list'), 'refresh');
@@ -74,11 +192,12 @@ class Admin extends MY_Controller {
 		}
 	}
 
-	function image_thumb($source_image, $new_image_name, $width, $height) {
+	function image_thumb($source_image,$thumbpath, $new_image_name, $width, $height) {
 		$this->load->library('image_lib');
 		$config['image_library'] = 'gd2';
 		$config['source_image'] = $source_image;
-		$config['new_image'] = 'upload/images/admin/' . $new_image_name;
+		//$config['new_image'] = 'upload/images/admin/' . $new_image_name;
+		$config['new_image'] = $thumbpath.$new_image_name;
 		$config['maintain_ratio'] = TRUE;
 		$config['height'] = $height;
 		$config['width'] = $width;

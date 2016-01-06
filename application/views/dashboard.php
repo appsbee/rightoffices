@@ -10,9 +10,9 @@
               <div class="profile-pic text-center">
                 <?php                
                 if(!empty($loginuser['profileimage'])){
-                $image= explode('.',$loginuser['profileimage']);
-                $user_image=$image[0].'_mid.'.$image[1];
-                $imagepath=base_url().'upload/images/admin/'.$user_image;
+                //$image= explode('.',$loginuser['profileimage']);
+                $user_image=$loginuser['profileimage'];
+                $imagepath=base_url().'upload/'.$loginuser['id'].'/image/'.$user_image;
                 }else{
                 $imagepath=base_url().'public/images/lock_thumb.jpg';
                 }
@@ -29,7 +29,7 @@
                   Aenean porttitor vestibulum imperdiet. Ut auctor accumsan erat,
                   a vulputate metus tristique non. Aliquam aliquam vel orci quis sagittis.
                 </p>
-                <a href="<?php echo base_url('settings/get_profile/'.$loginuser['id']); ?>" class="btn btn-primary">View Profile</a>
+                <a href="<?php echo base_url('settings/get_profile'); ?>" class="btn btn-primary">View Profile</a>
               </div>
             </div>
             <div class="col-md-5">
