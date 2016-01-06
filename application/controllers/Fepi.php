@@ -11,10 +11,11 @@ class Fepi extends MY_Controller {
 
 	public function update_data() {
 		// ini_set('memory_limit', '-1');
-		// $xmldata = simplexml_load_string(file_get_contents('/var/www/html/slate/output.xml')) or die("Error: Cannot create object");
+		// $xmldata = simplexml_load_string(file_get_contents('/var/www/html/slate/type2.xml')) or die("Error: Cannot create object");
 		// $xml = $this->object_to_array($xmldata);
-		// echo '<pre>print_r($xml); die;
-		// $this->mfepi->set_new_data($xml);die;
+		// echo '<pre>';print_r($xml); die;
+		// $this->mfepi->set_existing_data($xml);die;
+
 		if ($this->input->post('type') != '') {
 
 			ini_set('memory_limit', '-1');
@@ -68,7 +69,6 @@ class Fepi extends MY_Controller {
 		echo header('Content-Type: application/json');
 		echo json_encode($result);
 		die;
-
 	}
 
 	public function object_to_array($obj) {
@@ -84,7 +84,6 @@ class Fepi extends MY_Controller {
 		} else {
 			$new = $obj;
 		}
-
 		return $new;
 	}
 }

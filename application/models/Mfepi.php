@@ -15,21 +15,20 @@ class Mfepi extends CI_Model {
 	}
 
 	public function set_existing_data($xml) {
-		if (!isset($xml)) {
-			return 0;
-		}
-		$allcentreids = $this->checkExistingCentre();
-		$centreids = array();
-		foreach ($allcentreids as $centre) {
-			$centreids[] = $centre['CentreID'];
-		}
 		$status = 0;
 		$centredata = array();
 		$officedata = array();
 		$centrephotos = array();
+
+		$all_centre_ids = $this->db->select('CentreID')->get('Centre')->result_array();
+		$centre_ids = array();
+		foreach ($all_centre_ids as $centre) {
+			$centre_ids[] = $centre['CentreID'];
+		}
+
 		if (isset($xml['Centre']) && is_array($xml['Centre']) && count($xml['Centre'])) {
 			foreach ($xml['Centre'] as $mainKey => $eachCenter) {
-				if(!in_array($eachCenter['CentreID'], $centreids)){
+				if (!in_array($eachCenter['CentreID'], $centre_ids)) {
 					// Starting with the Center details
 					$tempCenterData = array(
 						'CentreID' => $eachCenter['CentreID'],
@@ -55,6 +54,7 @@ class Mfepi extends CI_Model {
 						'Longitude' => isset($eachCenter['Longitude']) ? $eachCenter['Longitude'] : '',
 					);
 					$centredata[] = $tempCenterData;
+
 					// Get the office data
 					if (isset($eachCenter['OfficeTypes']) && is_array($eachCenter['OfficeTypes']) && count($eachCenter['OfficeTypes']) > 1) {
 						foreach ($eachCenter['OfficeTypes'] as $ofcKey => $eachOffice) {
@@ -107,8 +107,8 @@ class Mfepi extends CI_Model {
 							}
 						}
 						$officedata[] = $tempOfficeData;
-					}	
-                    
+					}
+
 					// Get the photos data
 					if (isset($eachCenter['Photos']['Photo']) && is_array($eachCenter['Photos']['Photo']) && count($eachCenter['Photos']['Photo'])) {
 						foreach ($eachCenter['Photos']['Photo'] as $photoKey => $eachPhoto) {
@@ -126,16 +126,25 @@ class Mfepi extends CI_Model {
 					//
 				}
 			}
-			if(!empty($centredata)){
-			    $this->db->insert_batch('Centre', $centredata);
+
+			/*echo '<pre>';
+				print_r($centredata);
+				print_r($officedata);
+			*/
+
+			if (isset($centredata) && is_array($centredata) && count($centredata)) {
+				$this->db->insert_batch('Centre', $centredata);
+			}
+
+			if (isset($officedata) && is_array($officedata) && count($officedata)) {
 				$this->db->insert_batch('OfficeTypes', $officedata);
-				$this->db->insert_batch('Photos', $centrephotos);	
+			}
+
+			if (isset($centrephotos) && is_array($centrephotos) && count($centrephotos)) {
+				$this->db->insert_batch('Photos', $centrephotos);
 			}
 			$status = 1;
 		}
-		/*if (isset($error) && !empty($error)) {
-			$status = 0;
-		}*/
 		return $status;
 	}
 
