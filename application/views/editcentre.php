@@ -25,7 +25,7 @@
                        <!-- <header class="panel-heading">
                             Update Centre  <a  href='javascript:history.back()' class='btn btn-success' style="margin-left: 800px;">Back</a>
                         </header>-->
-                                                    <header class="panel-heading">
+                    <header class="panel-heading">
                         <div class="col-sm-12">
                         <div class="col-sm-10 no-margin" style="padding-left:0;">
                         <h4>Update Centre   </h4></div>
@@ -40,23 +40,23 @@
                             <div class="position-center">
                                 <form role="form" method="POST" action="<?php echo base_url('centre/update_centre_data');?>">
                                  <div class="form-group">
-                                    <label for="exampleInputEmail1">CentreDescription</label>
+                                    <label for="CentreDescription">CentreDescription</label>
                                     <textarea class="form-control" id="CentreDescription" name="CentreDescription" placeholder="Centre Description" rows="5"><?php echo $centre_details['CentreDescription'];?> </textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">OperatorCode</label>
+                                    <label for="OperatorCode">OperatorCode</label>
                                     <input type="text" class="form-control" id="OperatorCode" name="OperatorCode" placeholder="OperatorCode" value="<?php echo $centre_details['OperatorCode'];?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">City</label>
+                                    <label for="City">City</label>
                                     <input type="text" class="form-control" id="City" name="City" placeholder="City" value="<?php echo $centre_details['City'];?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Address</label>
+                                    <label for="Address">Address</label>
                                     <input type="text" class="form-control" id="Address" name="Address" placeholder="Address" value="<?php echo $centre_details['Address'];?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Postcode</label>
+                                    <label for="Postcode">Postcode</label>
                                     <input type="text" class="form-control" id="Postcode" name="Postcode" placeholder="Postcode" value="<?php echo $centre_details['Postcode'];?>">
                                  </div>    
                                 <input type="hidden" name="CentreId" id="CentreId" value="<?php echo $centre_details['CentreID'];?>" />
@@ -90,7 +90,7 @@
                                     <div id='contentdata'> 
                                         <div class='subdata'>    
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Keyword</label>
+                                                <label for="keyword">Keyword</label>
                                                 <span id='keycontent'>
                                                 <select class="form-control check"  name="keyword[]">
                                                 <option value="">Select</option>
@@ -104,7 +104,7 @@
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Content</label>
+                                                <label for="content">Content</label>
                                                 <textarea class="form-control check"  name="content[]" placeholder="content"></textarea>
                                             </div>
                                             

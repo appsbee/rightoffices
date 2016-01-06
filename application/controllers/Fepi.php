@@ -55,7 +55,7 @@ class Fepi extends MY_Controller {
 				);
 			} else {
 				$result = array(
-					'status' => 1,
+					'status' => 0,
 					'error' => 'Error in loading data.Please try again later',
 				);
 			}

@@ -17,7 +17,7 @@
                         <!--<header class="panel-heading">
                             Update Content   <a  href='javascript:history.back()' class='btn btn-success' style="margin-left: 800px;">Back</a>
                         </header> -->
-                             <header class="panel-heading">
+                    <header class="panel-heading">
                         <div class="col-sm-12">
                         <div class="col-sm-10 no-margin" style="padding-left:0;">
                         <h4> Update Content   </h4></div>
@@ -32,11 +32,11 @@
                             <div class="position-center">
                                 <form role="form" method="POST" action="<?php echo base_url('content/update_content_data');?>">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Title</label>
+                                    <label for="title">Title</label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="<?php echo $content_details['title'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Description</label>
+                                    <label for="description">Description</label>
                                     <textarea class="form-control" id="description" name="description" placeholder="Description"><?php echo $content_details['description'];?></textarea>
                                     <script type="text/javascript">
                                         CKEDITOR.replace( 'description' );

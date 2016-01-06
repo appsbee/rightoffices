@@ -35,8 +35,8 @@
                 <h4>Client List </h4>
                 <form>
                   <tr>
-                    <td>Start Date</td><td><input type="text" name="start_date" id="start_date" /></td>
-                    <td>End Date</td><td><input type="text" name="end_date" id="end_date" /></td>
+                    <td><label for="start_date">Start Date</label></td><td><input type="text" name="start_date" id="start_date" /></td>
+                    <td><label for="end_date">End Date</label></td><td><input type="text" name="end_date" id="end_date" /></td>
                     <td></td><td><input type="button" name="submit" id="clientsearch" value="Search" /></td>
                   </tr>
                 </form>
@@ -116,11 +116,11 @@
               <div class="position-center">
                 <form role="form" name='mailform'>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Subject</label>
+                    <label for="subject">Subject</label>
                     <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Message</label>
+                    <label for="msg">Message</label>
                     <textarea class="form-control" id="msg" name="msg" placeholder="Message"></textarea>
                   </div>
                   <input type="hidden" name="user_id" id="user_id" value="" />
@@ -154,7 +154,7 @@
         },
         "columnDefs": [{
           "targets": -1,
-          "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='todo-remove' href='#' style='margin-left:20px;'><i class='ico-close'></i></a><a class='clientview' data-toggle='modal' href='#clientview' style='margin-left:20px;'><i class='glyphicon glyphicon-list'></i></a>"
+          "defaultContent": "<a data-toggle='modal' class='todo-edit' href='#'><i class='ico-pencil'></i></a><a class='todo-remove' href='#' style='margin-left:20px;'><i class='ico-close'></i></a><a class='clientview' data-toggle='modal' href='#clientview' style='margin-left:20px;'><i class='glyphicon glyphicon-eye-open'></i></a>"
         }]
 
       });
@@ -238,21 +238,6 @@
         table.draw();
       });
 
-      /*    $.fn.dataTable.ext.search.push( function( oSettings, aData, iDataIndex ) {
-      var fromDateG = $('#start_date').val();
-      var toDateG = $('#end_date').val();
-      var iDate=aData[6];
-      if ( fromDateG == "" && toDateG == "" ){
-      return true;
-      }else if ( fromDateG == "" && iDate < toDateG ){
-      return true;
-      }else if ( fromDateG <= iDate && toDateG == ""  ){
-      return true;
-      }else if ( fromDateG <= iDate && iDate <= toDateG ){
-      return true;
-      }
-      return false;
-      });*/
       $('.dash').click(function() {
         var name = this.name;
         var id = new Array();

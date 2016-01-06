@@ -7,7 +7,7 @@ class Mfepi extends CI_Model {
 		parent::__construct();
 	}
 
-	public function check_existing_centre() {
+	public function checkExistingCentre() {
 		$this->db->select('CentreID');
 		$this->db->from('Centre');
 		$query = $this->db->get();
@@ -15,48 +15,133 @@ class Mfepi extends CI_Model {
 	}
 
 	public function set_existing_data($xml) {
-		$centredata = array();
-		$officedata = array();
-		$centrephotos = array();
+		if (!isset($xml)) {
+			return 0;
+		}
 		$allcentreids = $this->checkExistingCentre();
 		$centreids = array();
 		foreach ($allcentreids as $centre) {
 			$centreids[] = $centre['CentreID'];
 		}
-		foreach ($xml as $Centre => $CentreArray) {
-			foreach ($CentreArray as $key => $CDataArray) {
-				if (!in_array($CDataArray['CentreID'], $centreids)) {
-					$temp_centre = array();
-					$temp_centre = $CDataArray;
-					unset($temp_centre['OfficeTypes']);
-					unset($temp_centre['Photos']);
-					$centredata[] = $temp_centre;
-					$OfficeTypesArray = array();
-					$OfficeTypesArray = $CDataArray['OfficeTypes'];
-					$OfficeTypesArray['CentreID'] = $CDataArray['CentreID'];
-					$officedata[] = $OfficeTypesArray;
-					foreach ($CDataArray['Photos']['Photo'] as $key => $PhotoArray) {
-						$PhotoArray['CentreID'] = $CDataArray['CentreID'];
-						$centrephotos[] = $PhotoArray;
+		$status = 0;
+		$centredata = array();
+		$officedata = array();
+		$centrephotos = array();
+		if (isset($xml['Centre']) && is_array($xml['Centre']) && count($xml['Centre'])) {
+			foreach ($xml['Centre'] as $mainKey => $eachCenter) {
+				if(!in_array($eachCenter['CentreID'], $centreids)){
+					// Starting with the Center details
+					$tempCenterData = array(
+						'CentreID' => $eachCenter['CentreID'],
+						'CentreChangeDate' => isset($eachCenter['CentreChangeDate']) ? $eachCenter['CentreChangeDate'] : '',
+						'OperatorCode' => isset($eachCenter['OperatorCode']) && !is_array($eachCenter['OperatorCode']) ? $eachCenter['OperatorCode'] : '',
+						'City' => isset($eachCenter['City']) ? $eachCenter['City'] : '',
+						'Address' => isset($eachCenter['Address']) ? $eachCenter['Address'] : '',
+						'Postcode' => isset($eachCenter['Postcode']) ? $eachCenter['Postcode'] : '',
+						'CentreDescription' => isset($eachCenter['CentreDescription']) ? $eachCenter['CentreDescription'] : '',
+						'SearchResults' => isset($eachCenter['SearchResults']) ? $eachCenter['SearchResults'] : '',
+						'ShortFormCentreDescriptionEN' => isset($eachCenter['ShortFormCentreDescriptionEN']) ? $eachCenter['ShortFormCentreDescriptionEN'] : '',
+						'CentreDescriptionEN' => isset($eachCenter['CentreDescriptionEN']) ? $eachCenter['CentreDescriptionEN'] : '',
+						'Currency' => isset($eachCenter['Currency']) ? $eachCenter['Currency'] : '',
+						'CostPerPerson' => isset($eachCenter['CostPerPerson']) ? $eachCenter['CostPerPerson'] : '',
+						'MinSizeAvailable' => isset($eachCenter['MinSizeAvailable']) ? $eachCenter['MinSizeAvailable'] : '',
+						'MaxSizeAvailable' => isset($eachCenter['MaxSizeAvailable']) ? $eachCenter['MaxSizeAvailable'] : '',
+						'Totalworkstations' => isset($eachCenter['Totalworkstations']) ? $eachCenter['Totalworkstations'] : '',
+						'NearestTrainStation' => isset($eachCenter['NearestTrainStation']) && !is_array($eachCenter['NearestTrainStation']) ? $eachCenter['NearestTrainStation'] : '',
+						'NearestRoadLink' => isset($eachCenter['NearestRoadLink']) && !is_array($eachCenter['NearestRoadLink']) ? $eachCenter['NearestRoadLink'] : '',
+						'Country' => isset($eachCenter['Country']) ? $eachCenter['Country'] : '',
+						'State' => isset($eachCenter['State']) ? $eachCenter['State'] : '',
+						'Latitude' => isset($eachCenter['Latitude']) ? $eachCenter['Latitude'] : '',
+						'Longitude' => isset($eachCenter['Longitude']) ? $eachCenter['Longitude'] : '',
+					);
+					$centredata[] = $tempCenterData;
+					// Get the office data
+					if (isset($eachCenter['OfficeTypes']) && is_array($eachCenter['OfficeTypes']) && count($eachCenter['OfficeTypes']) > 1) {
+						foreach ($eachCenter['OfficeTypes'] as $ofcKey => $eachOffice) {
+							if (is_array($eachOffice)) {
+								foreach ($eachOffice as $subOfcKey => $subOfcData) {
+									$tempOfficeData = array(
+										'CentreID' => $eachCenter['CentreID'],
+										'Type' => isset($eachOffice['Type']) ? $eachOffice['Type'] : '',
+										'TypeID' => isset($eachOffice['TypeID']) ? $eachOffice['TypeID'] : '',
+										'OfficeTypeAssocID' => isset($eachOffice['OfficeTypeAssocID']) ? $eachOffice['OfficeTypeAssocID'] : '',
+										'OfficeTypeChangeDate' => isset($eachOffice['OfficeTypeChangeDate']) ? $eachOffice['OfficeTypeChangeDate'] : '',
+										'TypePrice' => isset($eachOffice['TypePrice']) ? $eachOffice['TypePrice'] : '',
+										'MinPrice' => isset($eachOffice['MinPrice']) ? $eachOffice['MinPrice'] : '',
+										'MaxPrice' => isset($eachOffice['MaxPrice']) ? $eachOffice['MinPrice'] : '',
+										'MinSize' => isset($eachOffice['MinSize']) ? $eachOffice['MinSize'] : '',
+										'MaxSize' => isset($eachOffice['MaxSize']) ? $eachOffice['MaxSize'] : '',
+										'TotalSize' => isset($eachOffice['TotalSize']) ? $eachOffice['TotalSize'] : '',
+										'AvailableSpace' => isset($eachOffice['AvailableSpace']) ? $eachOffice['AvailableSpace'] : '',
+										'BusinessRates' => isset($eachOffice['BusinessRates']) ? $eachOffice['BusinessRates'] : '',
+										'ServiceCharge' => isset($eachOffice['ServiceCharge']) ? $eachOffice['ServiceCharge'] : '',
+										'MinTerm' => isset($eachOffice['MinTerm']) ? $eachOffice['MinTerm'] : '',
+										'MaxTerm' => isset($eachOffice['MaxTerm']) ? $eachOffice['MaxTerm'] : '',
+										'MeasurementTypeID' => isset($eachOffice['MeasurementTypeID']) ? $eachOffice['MeasurementTypeID'] : '',
+										'MeasurementType' => isset($eachOffice['MeasurementType']) ? $eachOffice['MeasurementType'] : '',
+										'PriceDescription' => isset($eachOffice['PriceDescription']) ? $eachOffice['PriceDescription'] : '',
+									);
+								}
+							} else {
+								$tempOfficeData = array(
+									'CentreID' => $eachCenter['CentreID'],
+									'Type' => isset($eachCenter['OfficeTypes']['Type']) ? $eachCenter['OfficeTypes']['Type'] : '',
+									'TypeID' => isset($eachCenter['OfficeTypes']['TypeID']) ? $eachCenter['OfficeTypes']['TypeID'] : '',
+									'OfficeTypeAssocID' => isset($eachCenter['OfficeTypes']['OfficeTypeAssocID']) ? $eachCenter['OfficeTypes']['OfficeTypeAssocID'] : '',
+									'OfficeTypeChangeDate' => isset($eachOffice['OfficeTypeChangeDate']) ? $eachOffice['OfficeTypeChangeDate'] : '',
+									'TypePrice' => isset($eachCenter['OfficeTypes']['TypePrice']) ? $eachCenter['OfficeTypes']['TypePrice'] : '',
+									'MinPrice' => isset($eachCenter['OfficeTypes']['MinPrice']) ? $eachCenter['OfficeTypes']['MinPrice'] : '',
+									'MaxPrice' => isset($eachCenter['OfficeTypes']['MaxPrice']) ? $eachCenter['OfficeTypes']['MaxPrice'] : '',
+									'MinSize' => isset($eachCenter['OfficeTypes']['MinSize']) ? $eachCenter['OfficeTypes']['MinSize'] : '',
+									'MaxSize' => isset($eachCenter['OfficeTypes']['MaxSize']) ? $eachCenter['OfficeTypes']['MaxSize'] : '',
+									'TotalSize' => isset($eachCenter['OfficeTypes']['TotalSize']) ? $eachCenter['OfficeTypes']['TotalSize'] : '',
+									'AvailableSpace' => isset($eachCenter['OfficeTypes']['AvailableSpace']) ? $eachCenter['OfficeTypes']['AvailableSpace'] : '',
+									'BusinessRates' => isset($eachCenter['OfficeTypes']['BusinessRates']) ? $eachCenter['OfficeTypes']['BusinessRates'] : '',
+									'ServiceCharge' => isset($eachCenter['OfficeTypes']['ServiceCharge']) ? $eachCenter['OfficeTypes']['ServiceCharge'] : '',
+									'MinTerm' => isset($eachCenter['OfficeTypes']['MinTerm']) ? $eachCenter['OfficeTypes']['MinTerm'] : '',
+									'MaxTerm' => isset($eachCenter['OfficeTypes']['MaxTerm']) ? $eachCenter['OfficeTypes']['MaxTerm'] : '',
+									'MeasurementTypeID' => isset($eachCenter['OfficeTypes']['MeasurementTypeID']) ? $eachCenter['OfficeTypes']['MeasurementTypeID'] : '',
+									'MeasurementType' => isset($eachCenter['OfficeTypes']['MeasurementType']) ? $eachCenter['OfficeTypes']['MeasurementType'] : '',
+									'PriceDescription' => isset($eachCenter['OfficeTypes']['PriceDescription']) ? $eachCenter['OfficeTypes']['PriceDescription'] : '',
+								);
+							}
+						}
+						$officedata[] = $tempOfficeData;
+					}	
+                    
+					// Get the photos data
+					if (isset($eachCenter['Photos']['Photo']) && is_array($eachCenter['Photos']['Photo']) && count($eachCenter['Photos']['Photo'])) {
+						foreach ($eachCenter['Photos']['Photo'] as $photoKey => $eachPhoto) {
+							$tempPhotoData = array(
+								'CentreID' => $eachCenter['CentreID'],
+								'displayorder' => isset($eachPhoto['displayorder']) ? $eachPhoto['displayorder'] : '',
+								'imagesizelabel' => isset($eachPhoto['imagesizelabel']) ? $eachPhoto['imagesizelabel'] : '',
+								'imagewidth' => isset($eachPhoto['imagewidth']) ? $eachPhoto['imagewidth'] : '',
+								'imageheight' => isset($eachPhoto['imageheight']) ? $eachPhoto['imageheight'] : '',
+								'url' => isset($eachPhoto['url']) ? $eachPhoto['url'] : '',
+							);
+							$centrephotos[] = $tempPhotoData;
+						}
 					}
+					//
 				}
-
 			}
+			if(!empty($centredata)){
+			    $this->db->insert_batch('Centre', $centredata);
+				$this->db->insert_batch('OfficeTypes', $officedata);
+				$this->db->insert_batch('Photos', $centrephotos);	
+			}
+			$status = 1;
 		}
-		$status = 1;
-		$this->db->insert_batch('Centre', $centredata);
-		$this->db->insert_batch('OfficeTypes', $officedata);
-		$this->db->insert_batch('Photos', $centrephotos);
-		$error = $this->db->_error_message();
-		if (!empty($error)) {
+		/*if (isset($error) && !empty($error)) {
 			$status = 0;
-		}
+		}*/
 		return $status;
 	}
 
 	public function set_new_data($xml) {
 		if (!isset($xml)) {
-			return false;
+			return 0;
 		}
 
 		$status = 0;
@@ -167,23 +252,15 @@ class Mfepi extends CI_Model {
 				}
 
 			}
-
-			// echo '<pre>';
-			// print_r($centredata);
-			// print_r($officedata);
-			// print_r($centrephotos);
-			// die;
-
 			$this->db->insert_batch('Centre', $centredata);
 			$this->db->insert_batch('OfficeTypes', $officedata);
 			$this->db->insert_batch('Photos', $centrephotos);
-			// $error = $this->db->_error_message();
 			$status = 1;
 		}
 
-		if (isset($error) && !empty($error)) {
+		/*if (isset($error) && !empty($error)) {
 			$status = 0;
-		}
+		}*/
 		return $status;
 	}
 

@@ -34,7 +34,7 @@
                                 <button type="button" class="btn btn-info" id='addmore'>+Add More</button>   
                                 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Page</label>
+                                        <label for="pagename">Page</label>
                                         <select class="form-control" id="pagename" name="pagename">
                                         <option value="">Select</option>
                                         <?php 
@@ -47,7 +47,7 @@
                                     <div id='contentdata'> 
                                         <div class='subdata'>    
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Keyword</label>
+                                                <label for="keyword">Keyword</label>
                                                 <span id='keycontent'>
                                                 <select class="form-control check"  name="keyword[]">
                                                 <option value="">Select</option>
@@ -61,7 +61,7 @@
                                                 </span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Content</label>
+                                                <label for="content">Content</label>
                                                 <textarea class="form-control check"  name="content[]" placeholder="content"><?php echo $page_meta_detail['content']; ?></textarea>
                                             </div>
                                             
@@ -87,8 +87,8 @@ $(document).ready(function(){
          keyword=$('#keycontent').html();
          content+='<div class="subdata">';
          content+='<button type="button" class="btn btn-info removecontent" >-Remove</button>';
-         content+='<div class="form-group"><label for="exampleInputEmail1">Keyword</label>'+keyword+'</div>';
-         content+='<div class="form-group"><label for="exampleInputEmail1">Content</label><textarea class="form-control check" name="content[]" placeholder="content"></textarea></div>';
+         content+='<div class="form-group"><label for="keyword">Keyword</label>'+keyword+'</div>';
+         content+='<div class="form-group"><label for="content">Content</label><textarea class="form-control check" name="content[]" placeholder="content"></textarea></div>';
          content+='</div>';
          $('#contentdata').append(content);
     });

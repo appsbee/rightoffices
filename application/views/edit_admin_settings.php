@@ -48,19 +48,19 @@
               <div class="position-center">
                 <form role="form" method="POST" action="<?php echo base_url('settings/update_admin_data');?>" enctype="multipart/form-data">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
+                    <label for="email" >Email</label>
                     <input disabled="disabled" type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="<?php echo $admin_details['email'];?>">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Name</label>
+                    <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="<?php echo $admin_details['name'];?>">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Phone No</label>
+                    <label for="phone_no">Phone No</label>
                     <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="Enter phone no" value="<?php echo $admin_details['phone_no'];?>">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">Image</label>
+                    <label for="image">Image</label>
                     <input type="file" class="exampleInputFile" id="image" name="image">
                   </div>
                   <input type="hidden" name="user_id" id="user_id" value="<?php echo $admin_details['id'];?>" />
@@ -81,11 +81,11 @@
               <div class="position-center">
                 <form role="form" method="POST" action="<?php echo base_url('settings/change_password');?>">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Password</label>
+                    <label for="password">Password</label>
                     <input type="password" value="<?php echo set_value('password');?>" class="form-control" id="password" name="password" placeholder="Enter password">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Confirm Password</label>
+                    <label for="confirm_password">Confirm Password</label>
                     <input type="password" value="<?php echo set_value('confirm_password');?>" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm password">
                   </div>
                   
@@ -175,7 +175,17 @@
             dataType: 'text',
             data: 'type=' + type,
             success: function(msg) {
-              alert(msg);
+              msg = JSON.parse(msg);
+              var message = '', classStr = '';
+              if(msg.status){
+                message = 'Sync successfull.';
+                classStr = 'success';
+              }else{
+                message = 'Some error occured while sycning, Please try again.';
+                classStr = 'danger';
+              }
+              var str = '<div class="alert alert-' + classStr + ' alert-block fade in"><button type="button" class="close close-sm" data-dismiss="alert"><i class="fa fa-times"></i></button>' + message + '</div>';
+              $('.messages-container').prepend(str); 
               $('#loader').hide();
               $('#syncbtn').prop('disabled', false);
             }
@@ -183,26 +193,6 @@
         }
       }
     });
-    /*$("input:radio").click(function() {
-    var type=$(this).val();
-    var flag;
-    if(type=='new'){
-    flag=confirm('Would you like to continue ? ');
-    if(flag){
-    $('#loader').show();
-    $.ajax({
-    url: "< ?php echo base_url('fepi/update_data'); ?>",
-    cache: false,
-    type: 'POST',
-    dataType:'text',
-    data : 'type='+type,
-    success: function(msg){
-    alert(msg);
-    $('#loader').hide();
-    }
-    });
-    }
-    }
-    });*/
+
   });
   </script>

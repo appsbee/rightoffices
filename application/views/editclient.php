@@ -25,7 +25,7 @@
                      <!--   <header class="panel-heading">
                             Update Client   <a  href='javascript:history.back()' class='btn btn-success' style="margin-left: 800px;">Back</a>
                         </header>    -->
-                                                    <header class="panel-heading">
+                        <header class="panel-heading">
                         <div class="col-sm-12">
                         <div class="col-sm-10 no-margin" style="padding-left:0;">
                         <h4>Update Client   </h4></div>
@@ -40,39 +40,39 @@
                             <div class="position-center">
                                 <form role="form" method="POST" action="<?php echo base_url('client/update_client_data');?>">
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Title</label>
+                                    <label for="title">Title</label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="Enter firstname" value="<?php echo $client_details['title'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Firstname</label>
+                                    <label for="first_name">Firstname</label>
                                     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter firstname" value="<?php echo $client_details['first_name'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Lastname</label>
+                                    <label for="last_name">Lastname</label>
                                     <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter lastname" value="<?php echo $client_details['last_name'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Email</label>
+                                    <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="<?php echo $client_details['email'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Company</label>
+                                    <label for="company">Company</label>
                                     <input type="text" class="form-control" id="company" name="company" placeholder="Enter company" value="<?php echo $client_details['company'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Phone no</label>
+                                    <label for="phone_no">Phone no</label>
                                     <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="Enter phone no" value="<?php echo $client_details['phone_no'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Office size</label>
+                                    <label for="office_size">Office size</label>
                                     <input type="text" class="form-control" id="office_size" name="office_size" placeholder="Enter office size" value="<?php echo $client_details['office_size'];?>">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Note</label>
+                                    <label for="note">Note</label>
                                     <input type="text" class="form-control" id="note" name="note" placeholder="Enter note" value="<?php echo $client_details['note'];?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Status</label>
+                                    <label for="status">Status</label>
                                     <select name='status' id='status' class="form-control">
                                     <?php if($client_details['status']){?>
                                     <option value="<?php echo $client_details['status']?>" selected="selected">Active</option>
@@ -106,7 +106,7 @@
                             <div class="position-center">
                                 <form role="form" method="POST" action="<?php echo base_url('client/add_notes');?>">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Property</label>
+                                    <label for="property">Property</label>
                                     <textarea rows="6" class="form-control" id="property" name="property"></textarea>
                                 </div>
 								<input type="hidden" name="user_id" id="user_id" value="<?php echo $client_details['id'];?>" />
@@ -129,11 +129,11 @@
                             <div class="position-center">
                                 <form role="form" method="POST" action="<?php echo base_url('client/send_mail_notification');?>">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Subject</label>
+                                    <label for="subject">Subject</label>
                                     <input type="text"  class="form-control" id="subject" name="subject" placeholder="Subject">
                                 </div>
 								<div class="form-group">
-                                    <label for="exampleInputEmail1">Message</label>
+                                    <label for="message">Message</label>
                                    <textarea rows="6" class="form-control" id="message" name="message" placeholder="Message"></textarea>
                                 </div>
 								<input type="hidden" name="user_id" id="user_id" value="<?php echo $client_details['id'];?>" />
