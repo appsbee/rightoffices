@@ -28,30 +28,30 @@ class Settings extends MY_Controller {
 			$data['name'] = $this->input->post('name');
 			$data['phone_no'] = $this->input->post('phone_no');
 
-			/*if (!is_dir('.upload')) {
-					mkdir('./upload');
-				}
-
-				if (!is_dir('.upload/' . $user_id)) {
-					mkdir('.upload/' . $user_id);
-				}
-
-				if (!is_dir('upload/' . $user_id . '/image/')) {
-					mkdir('upload/' . $user_id . '/image/');
-				}
-
-				if (!is_dir('upload/' . $user_id . '/image/thumbs/')) {
-					mkdir('upload/' . $user_id . '/image/thumbs/');
-			*/
-
-			$struct = 'upload/' . $user_id . '/image/thumbs/';
-			if (!is_dir($struct)) {
-				if (!mkdir($struct, 0755, true)) {
-					die('could not create folders');
-				}
-			}
-
 			if ($_FILES['image']['name'] != '') {
+
+				/*if (!is_dir('.upload')) {
+						mkdir('./upload');
+					}
+
+					if (!is_dir('.upload/' . $user_id)) {
+						mkdir('.upload/' . $user_id);
+					}
+
+					if (!is_dir('upload/' . $user_id . '/image/')) {
+						mkdir('upload/' . $user_id . '/image/');
+					}
+
+					if (!is_dir('upload/' . $user_id . '/image/thumbs/')) {
+						mkdir('upload/' . $user_id . '/image/thumbs/');
+				*/
+
+				$struct = 'upload/' . $user_id . '/image/thumbs/';
+				if (!is_dir($struct)) {
+					if (!mkdir($struct, 0755, true)) {
+						die('could not create folders');
+					}
+				}
 
 				$config['upload_path'] = "upload/$user_id/image/";
 				$config['allowed_types'] = 'gif|jpg|jpeg|png';
