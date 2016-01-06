@@ -3,3 +3,5 @@
 composer.lock
 docs/
 digiopia.pem
+upload/
+upload_old/
