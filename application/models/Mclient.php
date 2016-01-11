@@ -160,7 +160,7 @@ class Mclient extends CI_Model {
                  }   
                 }
                 $i++;
-            }
+            } 
             $output['data'][] = $row;
         }
  

@@ -24,7 +24,7 @@ class Client extends MY_Controller {
 		  	echo 'Client deleted successfully';
 		  }else{
 		  	echo 'Error in deleting client';
-		  }
+		  } 
    }
    public function get_client_all_details(){
        $id=$this->input->post('id');

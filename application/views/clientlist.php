@@ -171,7 +171,7 @@
             dtable.search("").draw();
           }
           return;
-        });
+        });  
 
       $('#example tbody').on('click', '.todo-remove', function() {
         var data = table.row($(this).parents('tr')).data();
